@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>The Lotus Team</title>
+</head>
+<body style="background: linear-gradient(to left, #87aaff, #6694e8, #447dd1, #2367ba, #0150a3); color: white;">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex flex-column align-items-center" style="border-radius: 10px; overflow: hidden;">
+                <div class="left-section p-4 mt-3 text-center"> <!-- Agregado mt-3 para mover hacia arriba -->
+                    <img src="static/img/logoP.png" alt="The Lotus Team Logo" class="img-fluid mb-3" style="max-width: 300px;"> <!-- Cambiado max-width a 300px -->
+                    <h1 class="mb-3 display-4">Somos Carnes & Carne</h1> <!-- Cambiado a display-4 -->
+                    <form action="" method="post" class="mb-3">
+                        {% csrf_token %}
+                        <input type="text" name="username" class="form-control mb-3" placeholder="Usuario">
+                        <input type="password" name="password" class="form-control mb-3" placeholder="Contraseña">
+                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                    </form>
+                    <p><a href="#" class="text-white">¿Has olvidado la contraseña?</a></p>
+                </div>
+                <div class="right-section p-4">
+                    <h2 class="text-center mb-3">Somos más que una experiencia</h2>
+                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

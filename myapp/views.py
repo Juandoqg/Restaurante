@@ -1,0 +1,57 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth import login, logout, authenticate
+from .models import User
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
+
+def signin(request):
+    if request.method == 'GET':
+        return render(request, 'index.html')
+    elif request.method == 'POST':
+        try:
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                errors = {}
+                if not username:
+                    errors['username_error'] = "Por favor, introduce tu nombre de usuario."
+                if not password:
+                    errors['password_error'] = "Por favor, introduce tu contraseña."
+                else:
+                    errors['username_error'] = "El nombre de usuario o la contraseña no coinciden."
+                return render(request, 'signin.html', errors)
+            login(request, user)
+            if user.is_waiter == 1:
+                return redirect('/mesero')
+            if user.is_chef == 1:
+                return redirect('/chef')
+            if user.is_superuser == 1:
+                return redirect('/administrador')
+            
+            
+            
+        except Exception as e:
+            return HttpResponse(f"Error al logearse: {str(e)}")
+       
+def administrador(request):
+    user_id = request.user.id
+    users = User.objects.get(id=user_id)
+    return render(request,'administrador.html',{'users':users})
+
+def mesero(request):
+    user_id = request.user.id
+    users = User.objects.get(id=user_id)
+    return render(request,'mesero.html',{'users':users})
+    
+def chef(request):
+    user_id = request.user.id
+    users = User.objects.get(id=user_id)
+    return render(request,'chef.html',{'users':users})
+    
+@login_required
+def signout(request):
+    logout(request)
+    return redirect("/")    
