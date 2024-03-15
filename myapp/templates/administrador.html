@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Administrador</title>
 </head>
 <body>
     <h1>
-        Bienvenido {{user.first_name}}
-        Admin
+        Bienvenido administrador {{user.first_name}}
         <a href="{% url 'createUser' %}">Crear usuario</a>
+        <a href="{% url 'showUsers' %}">Ver empleados</a>
         <a href="{% url 'signout' %}">Cerrar sesión</a>
     </h1>
     

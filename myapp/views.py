@@ -47,7 +47,6 @@ def createUser(request):
             else:
                     is_chef=1
                     is_waiter =0
-            print(request.POST["Tipo"])
 
             user = User.objects.create_user(
                 request.POST["username"],
@@ -78,6 +77,18 @@ def chef(request):
     users = User.objects.get(id=user_id)
     return render(request,'chef.html',{'users':users})
     
+
+def showUsers(request):
+    users = User.objects.all()
+    return render(request, 'showUsers.html', {'users': users})
+
+
+
+
+
+
+
+
 @login_required
 def signout(request):
     logout(request)
