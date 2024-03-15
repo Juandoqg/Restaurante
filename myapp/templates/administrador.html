@@ -9,6 +9,7 @@
     <h1>
         Bienvenido {{user.first_name}}
         Admin
+        <a href="{% url 'createUser' %}">Crear usuario</a>
         <a href="{% url 'signout' %}">Cerrar sesión</a>
     </h1>
     

@@ -35,6 +35,33 @@ def signin(request):
             
         except Exception as e:
             return HttpResponse(f"Error al logearse: {str(e)}")
+
+def createUser(request):
+    if request.method == 'GET':
+        return render(request, 'createUser.html')
+    else:
+        try:
+            if request.POST["Tipo"] == 'Mesero':
+                    is_waiter=1
+                    is_chef=0
+            else:
+                    is_chef=1
+                    is_waiter =0
+            print(request.POST["Tipo"])
+
+            user = User.objects.create_user(
+                request.POST["username"],
+                password=request.POST["password"],
+                first_name=request.POST["name"],
+                last_name=request.POST["lastname"],
+                email=request.POST["email"],
+                is_waiter = is_waiter,
+                is_chef = is_chef
+            )        
+            user.save()
+            return redirect('administrador')
+        except Exception as e:
+            return HttpResponse(f"Error al registrar el usuario: {str(e)}")            
        
 def administrador(request):
     user_id = request.user.id
