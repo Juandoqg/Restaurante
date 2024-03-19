@@ -22,7 +22,7 @@ def signin(request):
                     errors['password_error'] = "Por favor, introduce tu contraseña."
                 else:
                     errors['username_error'] = "El nombre de usuario o la contraseña no coinciden."
-                return render(request, 'signin.html', errors)
+                return render(request, 'index.html', errors)
             login(request, user)
             if user.is_waiter == 1:
                 return redirect('/mesero')
@@ -30,8 +30,6 @@ def signin(request):
                 return redirect('/chef')
             if user.is_superuser == 1:
                 return redirect('/administrador')
-            
-            
             
         except Exception as e:
             return HttpResponse(f"Error al logearse: {str(e)}")

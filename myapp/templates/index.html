@@ -23,7 +23,13 @@
                         <form action="" method="post" class="mb-3">
                             {% csrf_token %}
                             <input type="text" name="username" class="form-control mb-3" placeholder="Usuario">
+                            {% if username_error %}
+                            <p class="text-white">{{ username_error }}</p>
+                            {% endif %}
                             <input type="password" name="password" class="form-control mb-3" placeholder="Contraseña">
+                            {% if password_error %}
+                            <p class="text-white">{{ password_error }}</p>
+                            {% endif %}
                             <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                         </form>
                         <p><a href="#" class="text-white">¿Has olvidado la contraseña?</a></p>
