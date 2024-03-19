@@ -87,12 +87,6 @@ def deleteUser(request, user_id):
     usuario.delete()
     return redirect('/showUsers')
 
-
-
-
-
-
-
 @login_required
 def signout(request):
     logout(request)
