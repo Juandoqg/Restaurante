@@ -32,6 +32,7 @@
                         <th>Tipo de empleado</th>
                         <th>Correo electrónico</th>
                         <th>Fecha de registro</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +60,7 @@
                         {% endif %}
                         <td>{{ usuario.email }}</td>
                         <td>{{ usuario.date_joined }}</td>
+                        <td><a href="{% url 'deleteUser' usuario.id %}">Eliminar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
