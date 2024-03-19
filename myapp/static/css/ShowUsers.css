@@ -1,0 +1,14 @@
+body{
+    background: linear-gradient(to left, #87aaff, #6694e8, #447dd1, #2367ba, #0150a3); color: white;
+}
+
+/* Estilos personalizados */
+.table td {
+    background-color: #f8f9fa; /* Color de fondo claro para las celdas de la tabla */
+    color: #212529; /* Color de texto para las celdas de la tabla */
+}
+
+.table th{
+    background-color: #e9dede;
+    color: black    ;
+}
