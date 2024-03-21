@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http.response import JsonResponse
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .models import User
@@ -80,6 +81,11 @@ def showUsers(request):
     users = User.objects.all()
     return render(request, 'showUsers.html', {'users': users})
 
+def listUsers(_request):
+    user = list(User.objects.values())
+    data = {'user': user}
+    return JsonResponse(data)
+    
 def deleteUser(request, user_id):
     usuario = get_object_or_404(User, pk=user_id)
     usuario.delete()
