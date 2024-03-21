@@ -1,28 +1,4 @@
 const dataTableOptions = {
-    language: {
-        "decimal": "",
-        "emptyTable": "No hay datos disponibles en la tabla",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-        "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
-        "infoFiltered": "(filtrado de _MAX_ entradas totales)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ entradas",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "No se encontraron registros coincidentes",
-        "paginate": {
-            "first": "Primero",
-            "last": "Último",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        },
-        "aria": {
-            "sortAscending": ": Activar para ordenar la columna ascendente",
-            "sortDescending": ": Activar para ordenar la columna descendente"
-        }
-    },
     columnDefs: [
         { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7] },
         { orderable: false, targets: [1, 6, 7] },
@@ -283,7 +259,7 @@ const dataTableOptions = {
             removeTitle: 'Remover Estado',
             renameTitle: 'Cambiar Nombre Estado',
         },
-    }, 
+    },
     pageLength: 4,
     destroy: true
 };
@@ -324,15 +300,15 @@ const listusers = async () => {
             content += `
                 <tr id="user-${user.id}">
                     <td>${user.id}</td>
-                    <td>${activo == 'Activo' ? "<p style='color: green;'>Activo</p>" : "<p style='color: red;'>Activo</p>"}</td>
+                    <td>${activo == 'Activo' ? "<p style='color: green;'>Activo</p>" : "<p style='color: red;'>No activo</p>"}</td>
                     <td>${user.email}</td>
                     <td>${user.first_name}</td>
                     <td>${user.last_name}</td>
                     <td>${user.username}</td>
                     <td>${userType}</td>
                     <td>
-                        <button class='btn btn-sm btn-primary'><i class='fa-solid fa-pencil'></i></button>
-                    
+                    <button class='btn btn-sm btn-primary' onclick="editUser(${user.id})"><i class='fa-solid fa-pencil'></i></button>
+
                         ${userType == 'Administrador' ?
                     "" :
                     `<button class='btn btn-sm btn-danger' onclick="deleteUser(${user.id})"><i class='fa-solid fa-trash-can'></i></button>`}
@@ -363,6 +339,16 @@ const deleteUser = async (userId) => {
     }
 }
 
+
+const editUser = async (userId) => {
+    try {
+        // Tu código para obtener los detalles del usuario con el ID proporcionado
+        // Llena el formulario de edición con los datos del usuario obtenidos
+        $('#editUserModal').modal('show'); // Abre el modal de edición
+    } catch (ex) {
+        alert(ex);
+    }
+};
 
 window.addEventListener('load', async () => {
     await initDatatable();
