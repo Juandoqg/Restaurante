@@ -1,3 +1,122 @@
-body{
-    background: linear-gradient(to left, #87aaff, #6694e8, #447dd1, #2367ba, #0150a3); color: white;
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(to left, #87aaff, #6694e8, #447dd1, #2367ba, #0150a3); 
+    color: white;
+}
+
+.main {
+    width: 90%;
+    max-width: 1200px;
+    /* Limita el ancho máximo para evitar que se vea demasiado estirado en pantallas grandes */
+    margin: auto;
+    padding: 2%;
+}
+
+.seccion {
+    background-color: #363841;
+    margin: 5% auto;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que los elementos se envuelvan a la siguiente línea */
+    justify-content: space-around;
+    /* Espacia los elementos de manera uniforme */
+    align-items: center;
+    padding: 5%;
+}
+
+.izq {
+    width: calc(50% - 20px);
+    /* Ajusta el ancho al 50% del contenedor */
+    margin-right: 20px;
+    /* Espacio entre los elementos */
+    padding: 20px;
+}
+
+.izqimg {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.izqimg img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.dere {
+    width: calc(50% - 20px);
+    /* Ajusta el ancho al 50% del contenedor */
+    background-color: rgb(91, 141, 141);
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 20px;
+    /* Espacio entre los elementos */
+}
+
+.Cu,
+.Vu,
+.Ep,
+.nuevoBoton {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.Cu:hover {
+    background-color: #0056b3;
+}
+
+.Vu:hover {
+    background-color: #218838;
+}
+
+.Ep:hover {
+    background-color: #d39e00;
+}
+
+.Cu:active {
+    background-color: #004286;
+}
+
+.Vu:active {
+    background-color: #1e7e34;
+}
+
+.Ep:active {
+    background-color: #c69500;
+}
+
+.nuevoBoton {
+    background-color: red;
+}
+
+.nuevoBoton:hover {
+    background-color: darkred;
+}
+
+@media (max-width: 768px) {
+    .seccion {
+        flex-direction: column;
+        /* Cambia a dirección de columna en dispositivos más pequeños */
+        align-items: center;
+        /* Centra los elementos en dispositivos más pequeños */
+    }
+
+    .izq,
+    .dere {
+        width: 100%;
+        /* Ocupa todo el ancho en dispositivos más pequeños */
+        margin-right: 0;
+        margin-left: 0;
+    }
 }
