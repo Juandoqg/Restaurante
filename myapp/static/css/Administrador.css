@@ -120,3 +120,9 @@ body {
         margin-left: 0;
     }
 }
+
+.btn-danger {
+    background-color: red;
+    border-color: red;
+    color: white;
+}
