@@ -70,7 +70,9 @@ def mesero(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)
     return render(request,'mesero.html',{'users':users})
-    
+  
+
+
 def chef(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)

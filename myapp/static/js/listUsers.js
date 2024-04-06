@@ -262,6 +262,7 @@ const dataTableOptions = {
     },
     pageLength: 4,
     destroy: true
+
 };
 
 let dataTable;
@@ -330,7 +331,7 @@ const deleteUser = async (userId) => {
         });
 
         if (response.ok) {
-            $(`#user-${userId}`).remove(); // Remove the row from the table
+            $(`#user-${userId}`).remove();
         } else {
             throw new Error('Failed to delete user');
         }

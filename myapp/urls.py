@@ -11,5 +11,4 @@ urlpatterns = [
      path("showUsers/",views.showUsers, name ="showUsers"),
      path("listUsers/",views.listUsers, name = "listUsers"),
      path("deleteUser/<int:user_id>",views.deleteUser, name ="deleteUser")
-
-]
+] 
