@@ -12,14 +12,22 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=100)
     disponible = models.BooleanField(default=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
+    nombre = models.CharField(max_length=50,default="")
+    urlImagen = models.CharField(max_length=50,default="")
 
+class Mesa (models.Model):
+    idMesa = models.AutoField(primary_key=True)
+    numero = models.IntegerField()
 
 class Pedido(models.Model):
     idPedido = models.AutoField(primary_key=True)
     idMesero = models.ForeignKey(User, on_delete=models.CASCADE)
-    mesa = models.CharField(max_length=50)
+    mesa = models.ForeignKey(Mesa,on_delete=models.CASCADE)
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField()
+    cantidad = models.IntegerField()
 
-
-      
+class Factura(models.Model):
+    idFactura = models.AutoField(primary_key=True)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    hora = models.DateTimeField(auto_now_add=True)
+    idPedido =models.ForeignKey(Pedido, on_delete=models.CASCADE)
