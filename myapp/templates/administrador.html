@@ -9,12 +9,37 @@
     <title>Administrador</title>
 </head>
 <body>
-    <h1>
-        Bienvenido administrador {{user.first_name}}
-        <a href="{% url 'createUser' %}">Crear usuario</a>
-        <a href="{% url 'showUsers' %}">Ver empleados</a>
-        <a href="{% url 'signout' %}">Cerrar sesión</a>
-    </h1>
+
+    <main class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="main">
+              <section class="seccion">
+                <article class="izq">
+                  <div class="text-center">Bienvenido, Usuario {{user.first_name}}</div>
+                  <div class="izqimg d-flex justify-content-center"><img src="{% static 'img/logoP.png' %}" alt=""></div>
+                  <a class="Cu btn btn-danger" href="{% url 'signout' %}">Cerrar Sesion</a>
+                </article>
+                <aside class="dere d-flex justify-content-center flex-column align-items-center">
+                  <div class="mb-3">
+                    <a class="Cu btn btn-primary" href="{% url 'createUser' %}">Crear Usuario</a>
+                  </div>
+                  <div class="mb-3">
+                    <a class="Vu btn btn-success" href="{% url 'showUsers' %}">Ver Usuario</a>
+                  </div>
+                  <div class="mb-3">
+                    <a class="Ep btn btn-warning" href="#">Crear producto</a>
+                  </div>
+                  <!-- Nuevo botón -->
+                  
+                </aside>
+              </section>
+            </div>
+          </div>
+        </div>
+    </main>
+    
+   
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
