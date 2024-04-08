@@ -1,3 +1,13 @@
 body{
-    background: linear-gradient(to left, #87aaff, #6694e8, #447dd1, #2367ba, #0150a3); color: white;
+
+    background: linear-gradient(to left, #a36a3d, #9f6336,#a36a3d);
+    
+   
+}
+
+
+#Btningresar{
+
+    background-color: #9e8a74;
+    
 }
