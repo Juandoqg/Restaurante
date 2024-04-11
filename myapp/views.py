@@ -3,6 +3,7 @@ from django.http.response import JsonResponse
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .models import User
+from .models import Mesa
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -26,7 +27,7 @@ def signin(request):
                 return render(request, 'index.html', errors)
             login(request, user)
             if user.is_waiter == 1:
-                return redirect('/mesero')
+                return redirect('/tomarPedido')
             if user.is_chef == 1:
                 return redirect('/chef')
             if user.is_superuser == 1:
@@ -66,19 +67,16 @@ def administrador(request):
     users = User.objects.get(id=user_id)
     return render(request,'administrador.html',{'users':users})
 
-def mesero(request):
+def tomarPedido(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)
-    return render(request,'mesero.html',{'users':users})
+    return render(request,'tomarPedido.html',{'users':users})
   
-
-
 def chef(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)
     return render(request,'chef.html',{'users':users})
     
-
 def showUsers(request):
     users = User.objects.all()
     return render(request, 'showUsers.html', {'users': users})
@@ -87,6 +85,11 @@ def listUsers(_request):
     user = list(User.objects.values())
     data = {'user': user}
     return JsonResponse(data)
+ 
+def listMesas(request):
+   mesa = list(Mesa.objects.values())
+   data = {'mesa': mesa}
+   return JsonResponse(data)
     
 def deleteUser(request, user_id):
     usuario = get_object_or_404(User, pk=user_id)
