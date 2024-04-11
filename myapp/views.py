@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .models import User
 from .models import Mesa
+from .models import Producto
+from .models import Pedido
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -95,6 +97,47 @@ def deleteUser(request, user_id):
     usuario = get_object_or_404(User, pk=user_id)
     usuario.delete()
     return redirect('/showUsers')
+
+def createProduct(request):
+    if request.method == 'GET':
+        return render(request, 'createProduct.html')
+    else:
+        try:
+            if request.POST["Disponible"] == 'Si':
+                disponible = True
+            else:
+                disponible = False
+
+            producto = Producto.objects.create(
+                nombre=request.POST["name"],
+                descripcion=request.POST["Descripcion"],
+                urlImagen=request.POST["url"],
+                precio = request.POST["Precio"],
+                disponible=disponible
+            )        
+            producto.save()
+            return redirect('administrador')
+        except Exception as e:
+            return HttpResponse(f"Error al registrar el producto: {str(e)}")
+
+def showProduct(request):
+    Productos = Producto.objects.all()
+    return render(request, 'showProduct.html', {'Productos': Productos})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def signout(request):

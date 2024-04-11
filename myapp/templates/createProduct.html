@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro producto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-primary d-flex align-items-center justify-content-center vh-100">
+    <div class="bg-white p-5 rounded shadow w-50">
+        <h2 class="text-center font-weight-bold mb-4 text-dark">¡Regístrate ahora!</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{fomr.as_p}}
+            <div class="mb-3">
+                <label for="name" class="form-label text-dark">Nombre</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="Descripcion" class="form-label text-dark">Descripción</label>
+                <textarea id="Descripcion" name="Descripcion" class="form-control" placeholder="Descripción" required rows="5"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="Precio" class="form-label text-dark">Precio</label>
+                <input type="number" id="Precio" name="Precio" class="form-control" placeholder="Precio" required>
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label text-dark">URL de la Imagen</label>
+                <input type="text" id="url" name="url" class="form-control" placeholder="URL" required>
+            </div>
+            <div class="mb-3">
+                <label for="Disponible" class="form-label text-dark">Disponible</label>
+                <select id="Disponible" name="Disponible" class="form-select" required>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Regístrate</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
