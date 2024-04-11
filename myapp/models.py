@@ -13,7 +13,6 @@ class Producto(models.Model):
     disponible = models.BooleanField(default=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     nombre = models.CharField(max_length=50,default="")
-    urlImagen = models.CharField(max_length=50,default="")
 
 class Mesa (models.Model):
     idMesa = models.AutoField(primary_key=True)

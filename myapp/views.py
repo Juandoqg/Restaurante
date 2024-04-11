@@ -111,7 +111,6 @@ def createProduct(request):
             producto = Producto.objects.create(
                 nombre=request.POST["name"],
                 descripcion=request.POST["Descripcion"],
-                urlImagen=request.POST["url"],
                 precio = request.POST["Precio"],
                 disponible=disponible
             )        
