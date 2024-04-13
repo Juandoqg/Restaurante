@@ -21,7 +21,7 @@
 <body class="bg-primary d-flex align-items-center justify-content-center vh-100">
     <article class="bg-white p-4 p-md-5 rounded shadow-sm">
         <h2 class="text-center font-weight-bold mb-4 text-dark">¡Regístralo ahora!</h2>
-        <form>
+        <form method="POST">
             <div class="mb-3">
                 {% csrf_token %}
                 {{form.as_p}}       
@@ -29,24 +29,19 @@
             <div class="row mb-3">
                 <div class="col">
                     <label for="nombreProducto" class="form-label text-dark">Nombre del producto</label>
-                    <input type="text" class="form-control" id="nombreProducto" placeholder="Nombre" required>
+                    <input type="text" class="form-control" name ="nombreProducto" id="nombreProducto" placeholder="Nombre" required>
                 </div>
                 <div class="col">
                     <div class="form-check form-switch mt-4">
-                        <input class="form-check-input" type="checkbox" id="toggleDisponible" name="toggleDisponible" required>
-                        <label class="form-check-label text-dark" for="toggleDisponible">Disponible</label>
+                        <input class="form-check-input" type="checkbox" id="toggleDisponible" name="toggleDisponible">
+                        <label class="form-check-label text-dark" name ="toggleDisponible"for="toggleDisponible">Disponible</label>
                     </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
                     <label for="Precio" class="form-label text-dark">Precio</label>
-                    <input type="price" id="Precio" name="Precio" class="form-control" placeholder="Precio" required>
-                </div>
-                <div class="col">
-                    <label for="imagenProducto" class="form-label text-dark">Subir imagen del producto</label>
-                    <input type="file" class="form-control" id="imagenProducto" name="imagenProducto" accept="image/*" onchange="previewImage()">
-                    <img id="imagenPrevista" src="#" alt="Vista previa de la imagen">
+                    <input type="number" id="Precio" name="Precio" class="form-control" placeholder="Precio" required>
                 </div>
             </div>
             <div class="mb-3">

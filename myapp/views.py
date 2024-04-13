@@ -103,22 +103,20 @@ def createProduct(request):
         return render(request, 'createProduct.html')
     else:
         try:
-            if request.POST["Disponible"] == 'Si':
-                disponible = True
-            else:
-                disponible = False
+            # Convertir el valor del toggle a un booleano
+            disponible = request.POST.get("toggleDisponible", False) == "on"
 
             producto = Producto.objects.create(
-                nombre=request.POST["name"],
+                nombre=request.POST["nombreProducto"],
                 descripcion=request.POST["Descripcion"],
-                precio = request.POST["Precio"],
+                precio=request.POST["Precio"],
                 disponible=disponible
-            )        
+            )
             producto.save()
             return redirect('administrador')
         except Exception as e:
             return HttpResponse(f"Error al registrar el producto: {str(e)}")
-
+            
 def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
