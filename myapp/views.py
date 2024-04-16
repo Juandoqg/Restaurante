@@ -29,7 +29,7 @@ def signin(request):
                 return render(request, 'index.html', errors)
             login(request, user)
             if user.is_waiter == 1:
-                return redirect('/tomarPedido')
+                return redirect('/verMesas')
             if user.is_chef == 1:
                 return redirect('/chef')
             if user.is_superuser == 1:
@@ -69,10 +69,10 @@ def administrador(request):
     users = User.objects.get(id=user_id)
     return render(request,'administrador.html',{'users':users})
 
-def tomarPedido(request):
+def verMesas(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)
-    return render(request,'tomarPedido.html',{'users':users})
+    return render(request,'verMesas.html',{'users':users})
   
 def chef(request):
     user_id = request.user.id
@@ -88,6 +88,10 @@ def listUsers(_request):
     data = {'user': user}
     return JsonResponse(data)
  
+def tomarPedido(request):
+    if request.method =="GET":
+     return render(request,'tomarPedido.html')
+
 def listMesas(request):
    mesa = list(Mesa.objects.values())
    data = {'mesa': mesa}
@@ -120,20 +124,6 @@ def createProduct(request):
 def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @login_required
