@@ -88,10 +88,6 @@ def listUsers(_request):
     data = {'user': user}
     return JsonResponse(data)
  
-def tomarPedido(request):
-    if request.method =="GET":
-     return render(request,'tomarPedido.html')
-
 def listMesas(request):
    mesa = list(Mesa.objects.values())
    data = {'mesa': mesa}
@@ -125,8 +121,40 @@ def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
 
+def tomarPedido(request):
+    if request.method == "GET":
+        productos = Producto.objects.all()
+        return render(request, 'tomarPedido.html', {'Productos': productos})
+    elif request.method == "POST":
+        try:
+            productos_seleccionados = request.POST.getlist('producto')
+            cantidad = int(request.POST['cantidad'])
+
+            id_mesero = request.user.id
+            id_mesa = 1  # Supongamos que la mesa tiene el id 1
+
+            for producto_id in productos_seleccionados:
+                if producto_id:  # Verificar si el producto_id no está vacío
+                    producto = Producto.objects.get(pk=producto_id)
+                    pedido = Pedido.objects.create(
+                        cantidad=cantidad,
+                        mesa_id=id_mesa,
+                        idMesero_id=id_mesero,
+                        idProducto_id=producto_id)
+                    pedido.save()  # Guardar el pedido en la base de datos
+                    print(id_mesero)
+                    print(cantidad)
+                    print(producto_id)
+                    print(id_mesa)
+                
+
+            return redirect('verMesas')  
+        except Exception as e:
+            return HttpResponse(f"Error al registrar el producto: {str(e)}")
 
 @login_required
 def signout(request):
     logout(request)
     return redirect("/")    
+
+  
