@@ -22,11 +22,11 @@
                             <p class="card-text">Precio: {{ producto.precio }}</p>
                             <p class="card-text">Disponible: {% if producto.disponible %} Sí {% else %} No {% endif %}</p>
                             <label for="cantidad{{ producto.id }}">Cantidad:</label>
-                            <input type="number" id="cantidad{{ producto.id }}" name="cantidad{{ producto.id }}" value="1" min="1" max="10">
+                            <input type="number" id="cantidad" name="cantidad" value="1" min="1" max="10">
                         </div>
                         <div class="card-footer">
-                            <input type="checkbox" id="producto{{ producto.id }}" name="producto{{ producto.id }}" value="{{ producto.id }}">
-                            <label for="producto{{ producto.id }}">Pedir</label>
+                            <input type="checkbox" id="producto" name="producto" value="">
+                            <label for="producto">Pedir</label>
                         </div>
                     </div>
                 </div>

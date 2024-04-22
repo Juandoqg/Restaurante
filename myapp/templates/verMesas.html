@@ -19,53 +19,15 @@
   </head>
 
   <body>
-    <div class="navBar">
-      <ul
-        class="nav nav-pills nav-fill gap-2 p-1 small bg-primary"
-        id="pillNav2"
-        role="tablist"
-        style="
-          --bs-nav-link-color: var(--bs-white);
-          --bs-nav-pills-link-active-color: var(--bs-white);
-          --bs-nav-pills-link-active-bg: var(--bs-black);
-        "
-      >
-        <li class="nav-item" role="presentation">
-          <button
-            
-            class="nav-link active rounded-5"
-            id="tomarPedidos"
-            data-bs-toggle="tab"
-            type="button"
-            role="tab"
-            aria-selected="true"
-          >
-            Tomar pedidos
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link rounded-5"
-            id="verPedidos"
-            data-bs-toggle="tab"
-            type="button"
-            role="tab"
-            aria-selected="false"
-          >
-            Ver pedidos
-          </button>
-        </li>
-        <li>
-          <button id="cerrarSesion" type="button" class="btn btn-danger">
-            <a href="{% url 'signout' %}">Cerrar sesión</a>
-          </button>
-        </li>
-      </ul>
-    </div>
-
     <div class="container mt-2">
+      <div class="d-flex justify-content-end mb-3">
+        <button id="cerrarSesion" type="button" class="btn btn-danger">
+          <a href="{% url 'signout' %}">Cerrar sesión</a>
+        </button>
+      </div>
+
       <div class="card-body d-flex flex-column">
-        <h1 class="text-center mb-4" >Mesas Disponibles</h1>
+        <h1 class="text-center mb-4">Mesas Disponibles</h1>
         <div class="row">
           <div class="col-md-12">
             <div id="mesasContainer" class="row"></div>

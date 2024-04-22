@@ -124,8 +124,9 @@ def showProduct(request):
 def tomarPedido(request):
     if request.method == "GET":
         productos = Producto.objects.all()
+        
         return render(request, 'tomarPedido.html', {'Productos': productos})
-    elif request.method == "POST":
+    else: 
         try:
             productos_seleccionados = request.POST.getlist('producto')
             cantidad = int(request.POST['cantidad'])
