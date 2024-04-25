@@ -121,6 +121,9 @@ def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
 
+def verPedido(request):
+    return render(request, 'verPedido.html')
+
 def tomarPedido(request):
     if request.method == "GET":
         productos = Producto.objects.all()

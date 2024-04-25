@@ -11,9 +11,9 @@ urlpatterns = [
      path("showUsers/",views.showUsers, name ="showUsers"),
      path("listUsers/",views.listUsers, name = "listUsers"),
      path("listMesas/",views.listMesas, name = "listMesas"),
-     path("deleteUser/<int:user_id>",views.deleteUser, name ="deleteUser"),
+     path("deleteUser/<int:user_id>/",views.deleteUser, name ="deleteUser"),
      path('createProduct/', views.createProduct, name='createProduct'),
-     path('verMesas/tomarPedido', views.tomarPedido, name='tomarPedido'),
+     path('verMesas/tomarPedido/', views.tomarPedido, name='tomarPedido'),
+     path('verMesas/verPedido/', views.verPedido, name='verPedido'),
      path('showProduct/', views.showProduct, name='showProduct')
-   
 ] 
