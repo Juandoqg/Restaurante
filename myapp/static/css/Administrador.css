@@ -4,113 +4,48 @@
     font-family: Helvetica;
 }
 
+.sidebar {
+    
+    position: fixed;
+    top: 10px;
+    bottom: 10px;
+    left: 0;
+    z-index: 100;
+    padding: 90px 0 0;
+    box-shadow: inset -1px 0 0 rgba(255, 225, 1, 0.916);
+    z-index: 99px;
+    
+}
+
+@media (max-width: 767.98px) {
+    .sidebar {
+        top: 11.5rem;
+        padding: 0;
+    }
+}
+
+.navbar {
+    box-shadow: inset 0 -1px 0 rgba(5, 255, 155, 0.1);
+    background-color: #000000;
+}
+
+@media (min-width: 767.98px) {
+    .navbar {
+        top: 0;
+        position: sticky;
+        z-index: 999;
+    }
+}
+
+.sidebar .nav-link {
+    color: #000000;
+}
+
+.sidebar .nav-link.active {
+    color: #000000;
+}
+
 body {
     background: linear-gradient(to left, #a36a3d, #9f6336,#a36a3d); 
 }
 
-.main {
-    
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 2%;
-
-}
-
-.seccion { 
-    background-color: #cc7316;
-    margin: 30% auto;
-    border-radius: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    padding: 5%;
-}
-
-.izq {
-    width: calc(50% - 20px);
-    margin-right: 20px;
-    padding: 20px;
-}
-
-.izqimg {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.izqimg img {
-    object-fit: cover;
-    width: 100%;
-}
-
-.dere {
-    width: calc(50% - 20px);
-    background-color: rgb(108, 112, 112);
-    border-radius: 10px;
-    padding: 20px;
-    margin-left: 20px;
-    
-}
-
-.Cu,
-.Vu,
-.Ep,
-.nuevoBoton {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    margin: 5px 0;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
-}
-
-.Cu:hover {
-    background-color: #0056b3;
-}
-
-.Vu:hover {
-    background-color: #218838;
-}
-
-.Ep:hover {
-    background-color: #d39e00;
-}
-
-.Cu:active {
-    background-color: #004286;
-}
-
-.Vu:active {
-    background-color: #1e7e34;
-}
-
-.Ep:active {
-    background-color: #c69500;
-}
-
-.nuevoBoton {
-    background-color: red;
-}
-
-.nuevoBoton:hover {
-    background-color: darkred;
-}
-
-@media (max-width: 768px) {
-    .seccion {
-        flex-direction: column;
-       
-        align-items: center;
-
-    }
-
-    .izq,
-    .dere {
-        width: 100%;
-        margin-right: 0;
-        margin-left: 0;
-    }
-}
