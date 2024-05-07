@@ -123,7 +123,7 @@ def createProduct(request):
                 with open(ruta_imagen, 'wb') as f:
                     for chunk in imagen.chunks():
                         f.write(chunk)
-                producto.imgProducto = os.path.join('img', imagen.name)
+                producto.imgProducto = os.path.join('img/', imagen.name)
 
             # Guardar el producto en la base de datos
             producto.save()
