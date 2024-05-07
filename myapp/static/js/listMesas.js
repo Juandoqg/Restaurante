@@ -23,7 +23,7 @@ const listMesas = async () => {
                 <h5 class="card-title text-center mb-4">Mesa ${mesa.idMesa}</h5>
                 <img src="/static/img/mesa.jpg" alt="Imagen de la mesa" class="card-img-top">
                 <div class="d-flex justify-content-between mb-4">
-                    <a href="tomarPedido" class="btn btn-primary">Realizar pedido</a>
+                    <a href="#" class="btn btn-danger">Realizar pedido</a>
                     <a href="verPedido" class="btn btn-primary">Ver pedido</a>
                 </div>
             </div>

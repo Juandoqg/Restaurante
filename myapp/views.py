@@ -9,6 +9,7 @@ from .models import Pedido
 from mysite import settings
 from django.contrib.auth.decorators import login_required
 import os
+from django.core import serializers
 
 # Create your views here.
 
@@ -94,6 +95,22 @@ def listMesas(request):
    mesa = list(Mesa.objects.values())
    data = {'mesa': mesa}
    return JsonResponse(data)
+
+def listMesasPorId(request, idMesa):
+    if request.method == 'GET':
+        mesa = get_object_or_404(Mesa, idMesa=idMesa)
+        data = {
+            'idMesa': mesa.idMesa,
+            'numero': mesa.numero,
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    
+def listProductos(request):
+   mesa = list(Producto.objects.values())
+   data = {'producto': mesa}
+   return JsonResponse(data) 
     
 def deleteUser(request, user_id):
     usuario = get_object_or_404(User, pk=user_id)
@@ -139,36 +156,30 @@ def verPedido(request):
     return render(request, 'verPedido.html')
 
 def tomarPedido(request):
-    if request.method == "GET":
         productos = Producto.objects.all()
-        
         return render(request, 'tomarPedido.html', {'Productos': productos})
-    else: 
-        try:
-            productos_seleccionados = request.POST.getlist('producto')
-            cantidad = int(request.POST['cantidad'])
 
-            id_mesero = request.user.id
-            id_mesa = 1  # Supongamos que la mesa tiene el id 1
+def savePedido(request):
+    productos_seleccionados = request.POST.getlist('producto')
+    cantidad = int(request.POST['cantidad'])
 
-            for producto_id in productos_seleccionados:
-                if producto_id:  # Verificar si el producto_id no está vacío
-                    producto = Producto.objects.get(pk=producto_id)
-                    pedido = Pedido.objects.create(
-                        cantidad=cantidad,
-                        mesa_id=id_mesa,
-                        idMesero_id=id_mesero,
-                        idProducto_id=producto_id)
-                    pedido.save()  # Guardar el pedido en la base de datos
-                    print(id_mesero)
-                    print(cantidad)
-                    print(producto_id)
-                    print(id_mesa)
-                
+    id_mesero = request.user.id
+    id_mesa = 1  # Supongamos que la mesa tiene el id 1
 
-            return redirect('verMesas')  
-        except Exception as e:
-            return HttpResponse(f"Error al registrar el producto: {str(e)}")
+    for producto_id in productos_seleccionados:
+        if producto_id:  # Verificar si el producto_id no está vacío
+         producto = Producto.objects.get(pk=producto_id)
+         pedido = Pedido.objects.create(
+             cantidad=cantidad,
+             mesa_id=id_mesa,
+             idMesero_id=id_mesero,
+             idProducto_id=producto_id)
+         pedido.save()  # Guardar el pedido en la base de datos
+         print(id_mesero)
+         print(cantidad)
+         print(producto_id)
+         print(id_mesa)
+    return redirect('verMesas')  
 
 @login_required
 def signout(request):
