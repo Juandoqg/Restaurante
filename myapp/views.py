@@ -181,6 +181,33 @@ def savePedido(request):
          print(id_mesa)
     return redirect('verMesas')  
 
+def actualizar_usuario(request):
+    # Obtener los datos enviados en la solicitud POST
+    id = request.POST.get('id')
+    usuario_activo = request.POST.get('usuarioActivo')
+    correo = request.POST.get('correo')
+    nombre = request.POST.get('nombre')
+    apellido = request.POST.get('apellido')
+    username = request.POST.get('username')
+    tipo_empleado = request.POST.get('tipoEmpleado')
+
+    # Buscar el usuario por su ID
+    usuario = User.objects.get(id=id)
+
+    # Actualizar los campos del usuario con los nuevos valores
+    usuario.usuario_activo = usuario_activo
+    usuario.correo = correo
+    usuario.nombre = nombre
+    usuario.apellido = apellido
+    usuario.username = username
+    usuario.tipo_empleado = tipo_empleado
+
+    # Guardar los cambios en la base de datos
+    usuario.save()
+
+    # Devolver una respuesta JSON indicando que la actualización fue exitosa
+    return JsonResponse({'mensaje': 'Los datos del usuario han sido actualizados correctamente.'})
+
 @login_required
 def signout(request):
     logout(request)

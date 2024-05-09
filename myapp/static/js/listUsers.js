@@ -283,7 +283,6 @@ const listusers = async () => {
     try {
         const response = await fetch('http://127.0.0.1:8000/listUsers/')
         const data = await response.json();
-        console.log(data)
         let content = ``;
         let userType = '';
         let activo = '';
@@ -344,12 +343,18 @@ const deleteUser = async (userId) => {
 const editUser = async (userId) => {
     try {
         // Tu código para obtener los detalles del usuario con el ID proporcionado
+        
         // Llena el formulario de edición con los datos del usuario obtenidos
         $('#editUserModal').modal('show'); // Abre el modal de edición
+        console.log(userId)
     } catch (ex) {
         alert(ex);
     }
 };
+
+
+
+
 
 window.addEventListener('load', async () => {
     await initDatatable();

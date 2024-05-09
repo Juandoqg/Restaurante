@@ -59,7 +59,6 @@
                 </tr>
               </thead>
               <tbody id="tableBody_users"></tbody>
-              
             </table>
           </div>
         </div>
@@ -177,7 +176,7 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onclick="updateUser()"
+                  onclick="guardarCambiosUsuario()"
                 >
                   Guardar Cambios
                 </button>
@@ -187,6 +186,35 @@
         </div>
       </div>
     </div>
+
+    <script>
+      function guardarCambiosUsuario() {
+        var id = document.getElementById("edit-user-id").value;
+        var usuarioActivo = document.querySelector(
+          'input[name="option"]:checked'
+        ).value;
+        var correo = document.getElementById("edit-user-firstname").value;
+        var nombre = document.getElementById("edit-user-lastname").value;
+        var apellido = document.getElementById("edit-user-lastname").value;
+        var username = document.getElementById("edit-user-lastname").value;
+        var tipoEmpleado = document.getElementById("country").value;
+
+        // Crear un objeto con los datos del usuario
+        var datosUsuario = {
+          id: id,
+          usuarioActivo: usuarioActivo,
+          correo: correo,
+          nombre: nombre,
+          apellido: apellido,
+          username: username,
+          tipoEmpleado: tipoEmpleado,
+        };
+
+        console.log(datosUsuario)
+      }
+
+
+    </script>
 
     <!-- Bootstrap -->
     <script
