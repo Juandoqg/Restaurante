@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pedidos de la Mesa {{ idMesa }}</title>
+    <style>
+        /* Agrega tus estilos CSS personalizados aquí si es necesario */
+    </style>
 </head>
 <body>
-    <h1>Hola</h1>
+    <h1>Pedidos de la Mesa {{ idMesa }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Pedido</th>
+                <th>Mesero</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Hecho</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.idPedido }}</td>
+                <td>{{ pedido.idMesero.username }}</td>
+                <td>{{ pedido.idProducto.nombre }}</td>
+                <td>{{ pedido.cantidad }}</td>
+                <td>{{ pedido.hecho }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay pedidos para esta mesa.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

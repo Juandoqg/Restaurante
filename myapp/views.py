@@ -77,10 +77,12 @@ def verMesas(request):
     users = User.objects.get(id=user_id)
     return render(request,'verMesas.html',{'users':users})
   
+
 def chef(request):
     user_id = request.user.id
-    users = User.objects.get(id=user_id)
-    return render(request,'chef.html',{'users':users})
+    usuario = User.objects.get(id=user_id)
+    pedidos = Pedido.objects.all()  # Obtén todos los pedidos
+    return render(request, 'chef.html', {'usuario': usuario, 'pedidos': pedidos})
     
 def showUsers(request):
     users = User.objects.all()
@@ -152,10 +154,13 @@ def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
 
-def verPedido(request):
-    return render(request, 'verPedido.html')
+def verPedido(request, idMesa):
+    print (idMesa)
+    pedidos = Pedido.objects.filter(mesa__numero=idMesa)
+    return render(request, 'verPedido.html', {'pedidos': pedidos, 'idMesa': idMesa})
 
-def tomarPedido(request):
+
+def tomarPedido(request, idMesa):
         productos = Producto.objects.all()
         return render(request, 'tomarPedido.html', {'Productos': productos})
 
@@ -180,6 +185,12 @@ def savePedido(request):
          print(producto_id)
          print(id_mesa)
     return redirect('verMesas')  
+    
+def cambiar_estado_pedido(request, pedido_id):
+    pedido = Pedido.objects.get(idPedido=pedido_id)
+    pedido.hecho = not pedido.hecho  # Cambia el estado a lo contrario del actual
+    pedido.save()
+    return redirect('chef')    
 
 def actualizar_usuario(request):
     # Obtener los datos enviados en la solicitud POST

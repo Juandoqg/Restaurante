@@ -25,6 +25,7 @@ class Pedido(models.Model):
     mesa = models.ForeignKey(Mesa,on_delete=models.CASCADE)
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
+    hecho = models.BooleanField(default=False)
 
 class Factura(models.Model):
     idFactura = models.AutoField(primary_key=True)
