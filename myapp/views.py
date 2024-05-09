@@ -77,10 +77,12 @@ def verMesas(request):
     users = User.objects.get(id=user_id)
     return render(request,'verMesas.html',{'users':users})
   
+
 def chef(request):
     user_id = request.user.id
-    users = User.objects.get(id=user_id)
-    return render(request,'chef.html',{'users':users})
+    usuario = User.objects.get(id=user_id)
+    pedidos = Pedido.objects.all()  # Obtén todos los pedidos
+    return render(request, 'chef.html', {'usuario': usuario, 'pedidos': pedidos})
     
 def showUsers(request):
     users = User.objects.all()
@@ -180,6 +182,13 @@ def savePedido(request):
          print(producto_id)
          print(id_mesa)
     return redirect('verMesas')  
+    
+def cambiar_estado_pedido(request, pedido_id):
+    pedido = Pedido.objects.get(idPedido=pedido_id)
+    # Cambiar el estado del pedido
+    pedido.hecho = not pedido.hecho  # Cambia el estado a lo contrario del actual
+    pedido.save()
+    return redirect('chef')  # Redirige a la lista de pedidos (asegúrate de tener una URL con nombre 'lista_pedidos')    
 
 @login_required
 def signout(request):
