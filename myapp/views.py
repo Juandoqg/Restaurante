@@ -154,10 +154,13 @@ def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
 
-def verPedido(request):
-    return render(request, 'verPedido.html')
+def verPedido(request, idMesa):
+    print (idMesa)
+    pedidos = Pedido.objects.filter(mesa__numero=idMesa)
+    return render(request, 'verPedido.html', {'pedidos': pedidos, 'idMesa': idMesa})
 
-def tomarPedido(request):
+
+def tomarPedido(request, idMesa):
         productos = Producto.objects.all()
         return render(request, 'tomarPedido.html', {'Productos': productos})
 
@@ -185,10 +188,9 @@ def savePedido(request):
     
 def cambiar_estado_pedido(request, pedido_id):
     pedido = Pedido.objects.get(idPedido=pedido_id)
-    # Cambiar el estado del pedido
     pedido.hecho = not pedido.hecho  # Cambia el estado a lo contrario del actual
     pedido.save()
-    return redirect('chef')  # Redirige a la lista de pedidos (asegúrate de tener una URL con nombre 'lista_pedidos')    
+    return redirect('chef')    
 
 @login_required
 def signout(request):
