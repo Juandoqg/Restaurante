@@ -1,23 +1,32 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family:sans-serif;
     margin: 0;
     padding: 20px;
-    background-image:url(myapp\static\img\Fondo.jpg);
-}
-
-.tablaItems{
-    background-color: white;
-
+    background-image:url('../img/Fondo.jpg');
 }
 
 .titulos {
     text-align: center;
-    border: 1px solid black; /* Añadí un ancho para que se vea el borde */
     border-radius: 15px; /* Incrementé el radio para que los bordes sean más redondeados */
-    background-color: white;
+    background-color: #fbe5ad;
+    width: 40%;
+    margin: 0 auto; /* Para centrar horizontalmente */
 }
 
 
+.head-tabla{
+    background-color: #87694c;
+    color: white;
+}
+
+.tablaItems{
+    background-color: #fbe5ad;
+    border-radius: 30px;
+}
+
+#botones{
+    background-color: #87694c;
+}
 
 /* Estilos anteriores con css (Se cambiaron a boostrap)
 

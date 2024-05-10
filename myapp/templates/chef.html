@@ -19,7 +19,7 @@
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead class="thead-dark">
+                <thead class="head-tabla">
                     <tr>
                         <th>ID Pedido</th>
                         <th>Mesero</th>
@@ -42,7 +42,7 @@
                         <td>
                             <form method="POST" action="{% url 'cambiar_estado_pedido' pedido.idPedido %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Cambiar Estado</button>
+                                <button type="submit" class="btn btn-primary" id="botones">Cambiar Estado</button>
                             </form>
                         </td>
                     </tr>
