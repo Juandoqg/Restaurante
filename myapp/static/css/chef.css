@@ -28,6 +28,11 @@ body {
     background-color: #87694c;
 }
 
+.logout{
+    position: absolute;
+    right:5%;
+    top: 5%;
+}
 /* Estilos anteriores con css (Se cambiaron a boostrap)
 
 .container {
