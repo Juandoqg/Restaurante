@@ -4,117 +4,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/administrador.css' %}" />
     <title>Administrador</title>
-    <link rel="icon" href="{% static 'img/logo.svg' %}" type="image/png" />
+    <link rel="icon" href="{% static 'img/Logo-icono.svg' %}" type="image/png" />
   </head>
 
   <body>
-    <nav class="navbar navbar-light bg-light p-3">
-      <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
-        <a class="navbar-brand" href="#"><img src="{% static 'img/logo.svg' %}" alt="La PATRANA Logo" style="max-height: 40px;" /></a>
-        <button class="navbar-toggler d-md-none collapsed mb-3" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div id="dashboard-container">
+      <div class="sidebar">
+        <div class="logo">
+          <!-- Logo goes here -->
+          <img src="{% static 'img/logo.svg' %}" alt="Logo de La Patrana" class="img-fluid mb-3" style="max-width: 100px;" />
+          <hr />
+        </div>
+
+        <div class="sidebar-option">
+          <a href="{% url 'createUser' %}" class="d-flex align-items-center justify-content-start w-100">
+            <i class="fas fa-user-plus"></i> <span>Crear Usuario</span>
+          </a>
+        </div>
+        <div class="sidebar-option">
+          <a href="{% url 'showUsers' %}" class="d-flex align-items-center justify-content-start w-100">
+            <i class="fas fa-users"></i> Ver Usuario</a>
+        </div>
+        <div class="sidebar-option">
+          <a href="{% url 'createProduct' %}" class="d-flex align-items-center justify-content-start w-100">
+            <i class="fas fa-box-open"></i> Crear Productos</a>
+        </div>
+        <div class="sidebar-option">
+          <a href="{% url 'showProduct' %}" class="d-flex align-items-center justify-content-start w-100">
+            <i class="fas fa-boxes"></i> Ver Producto</a>
+        </div>
+        <div class="sidebar-option">
+          <a href="{% url 'signout'%}" class="d-flex align-items-center justify-content-start w-100"> 
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+          </a>
+        </div>
+
       </div>
-
-      <div class="col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-3 mt-md-0">
-            <button id="cerrarSesion" type="button" class="btn btn-danger">
-              <a href="{% url 'signout' %} " style="color: aliceblue;">Cerrar sesión</a>
-            </button>
-      </div>
-    </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-          <!-- sidebar content goes in here -->
-
-          <div class="position-sticky pt-md-5">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'createUser' %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                  <span class="ml-2">Crear usuario</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'showUsers' %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
-                    <path d="M22 12c-2.1-3.5-6.2-8-10-8s-7.9 4.5-10 8c2.1 3.5 6.2 8 10 8s7.9-4.5 10-8zm-10 6c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
-                  </svg>
-                  <span class="ml-2">Ver usuario</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'createProduct' %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="16"></line>
-                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                  </svg>
-                  <span class="ml-2">Crear productos</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'showProduct' %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
-                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                    <line x1="3" y1="6" x2="3" y2="6"></line>
-                    <line x1="3" y1="12" x2="3" y2="12"></line>
-                    <line x1="3" y1="18" x2="3" y2="18"></line>
-                  </svg>
-                  <span class="ml-2">Ver productos</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-          <h1 class="h2">Dashboard</h1>
-          <!-- Aquí incluyes el iframe con la página que quieres mostrar -->
-        </main>
+      <div class="content">
+        <i class="fas fa-bars toggle-sidebar"></i>
+        <!-- Content will be displayed here -->
       </div>
     </div>
+    <a href="{% url 'signout' %}" class="btn btn-secondary btn-sm logout">Cerrar Sesión</a>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <!--  
-    <nav class="navbar navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Administrador</a>
-            <div class="d-flex flex-column">
-                <div class="text-center mb-3">
-                    Bienvenido {{user.first_name}}
-                    <img src="{% static 'img/logo.svg' %}" alt="The Lotus Team Logo" class="img-fluid mb-3"
-                        style="max-width: 255px;">
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'createUser' %}">Crear Usuario</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'showUsers' %}">Ver Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'createProduct' %}">Crear Producto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'showProduct' %}">Ver Productos</a>
-                    </li>
-                </ul>
-            </div>
-            <a class="btn btn-danger mt-3" href="{% url 'signout' %}">Cerrar Sesión</a>
-        </div>
-    </nav>
- -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function () {
+        $('.toggle-sidebar').click(function () {
+          $('#dashboard-container').toggleClass('hide-sidebar')
+          $('.logout').toggle() // This will toggle the visibility of the logout button
+        })
+      })
+    </script>
+    
   </body>
 </html>
