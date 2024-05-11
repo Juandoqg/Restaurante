@@ -27,7 +27,7 @@ const listProductos = async () => {
                     <div class="card-header d-flex justify-content-center align-items-center">
                         <img src="/static/${producto.imgProducto}" alt="Imagen del producto" class="card-img-top">
                     </div>
-                    <div class="card-body d-flex flex-column">
+                    <div class="card-body d-flex flex-column" id="card">
                         <h5 class="card-title text-center mb-4">Producto:  ${producto.nombre}</h5>
                         <h5 class="card-title text-center mb-4">Precio:  ${producto.precio}</h5>
                         <h5 class="card-title text-center mb-4">Disponible:  ${producto.disponible}</h5>

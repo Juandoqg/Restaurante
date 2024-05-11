@@ -25,10 +25,10 @@ const listMesas = async () => {
                 <div class="card mt-2">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center mb-4">Mesa ${mesa.idMesa}</h5>
-                        <img src="/static/img/mesa.jpg" alt="Imagen de la mesa" class="card-img-top">
+                        <img src="/static/img/mesa.jpeg" alt="Imagen de la mesa" class="card-img-top" id="imagenMesa">
                         <div class="d-flex justify-content-between mb-4">
-                            <a href="${tomarPedidoURL}" class="btn btn-danger">Realizar pedido</a>
-                            <a href="${verPedidoURL}" class="btn btn-primary">Ver pedido</a>
+                            <a href="${tomarPedidoURL}" class="btn btn-success">Realizar pedido</a>
+                            <a href="${verPedidoURL}" class="btn btn-warning">Ver pedido</a>
                         </div>
                     </div>
                 </div>
