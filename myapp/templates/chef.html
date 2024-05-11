@@ -27,7 +27,7 @@
                         <th>Mesa</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
-                        <th>Hecho</th>
+                        <th>Estado del pedido</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -39,7 +39,11 @@
                         <td>{{ pedido.mesa.numero }}</td>
                         <td>{{ pedido.idProducto.nombre }}</td>
                         <td>{{ pedido.cantidad }}</td>
-                        <td>{{ pedido.hecho }}</td>
+                        {% if pedido.hecho  %}
+                        <td>Listo</td>
+                        {% else %}
+                        <td>En proceso...</td>
+                        {% endif%}
                         <td>
                             <form method="POST" action="{% url 'cambiar_estado_pedido' pedido.idPedido %}">
                                 {% csrf_token %}

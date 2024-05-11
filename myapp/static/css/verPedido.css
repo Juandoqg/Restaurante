@@ -1,0 +1,35 @@
+/* VerPedido.css */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-image: url('../img/Fondo.jpg');
+}
+
+.titulos {
+    text-align: center;
+    border-radius: 15px;
+    background-color: #fbe5ad;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.head-tabla {
+    background-color: #87694c;
+    color: white;
+}
+
+.tablaItems {
+    background-color: #fbe5ad;
+    border-radius: 30px;
+}
+
+#botones {
+    background-color: #87694c;
+}
+
+.logout {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
