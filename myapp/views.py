@@ -41,6 +41,7 @@ def signin(request):
         except Exception as e:
             return HttpResponse(f"Error al logearse: {str(e)}")
 
+@login_required
 def createUser(request):
     if request.method == 'GET':
         return render(request, 'createUser.html')
@@ -65,39 +66,45 @@ def createUser(request):
             user.save()
             return redirect('administrador')
         except Exception as e:
-            return HttpResponse(f"Error al registrar el usuario: {str(e)}")            
-       
+            return HttpResponse(f"Error al registrar el usuario: {str(e)}")   
+
+@login_required       
 def administrador(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)
     return render(request,'administrador.html',{'users':users})
 
+@login_required
 def verMesas(request):
     user_id = request.user.id
     users = User.objects.get(id=user_id)
     return render(request,'verMesas.html',{'users':users})
   
-
+@login_required
 def chef(request):
     user_id = request.user.id
     usuario = User.objects.get(id=user_id)
     pedidos = Pedido.objects.all()  # Obtén todos los pedidos
     return render(request, 'chef.html', {'usuario': usuario, 'pedidos': pedidos})
-    
+
+@login_required    
 def showUsers(request):
     users = User.objects.all()
     return render(request, 'showUsers.html', {'users': users})
 
+@login_required
 def listUsers(_request):
     user = list(User.objects.values())
     data = {'user': user}
     return JsonResponse(data)
- 
+
+@login_required 
 def listMesas(request):
    mesa = list(Mesa.objects.values())
    data = {'mesa': mesa}
    return JsonResponse(data)
 
+@login_required
 def listMesasPorId(request, idMesa):
     if request.method == 'GET':
         mesa = get_object_or_404(Mesa, idMesa=idMesa)
@@ -108,17 +115,20 @@ def listMesasPorId(request, idMesa):
         return JsonResponse(data)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
-    
+
+@login_required    
 def listProductos(request):
    mesa = list(Producto.objects.values())
    data = {'producto': mesa}
    return JsonResponse(data) 
-    
+
+@login_required    
 def deleteUser(request, user_id):
     usuario = get_object_or_404(User, pk=user_id)
     usuario.delete()
     return redirect('/showUsers')
 
+@login_required
 def createProduct(request):
     if request.method == 'GET':
         return render(request, 'createProduct.html')
@@ -149,49 +159,60 @@ def createProduct(request):
             return redirect('administrador')
         except Exception as e:
             return HttpResponse(f"Error al registrar el producto: {str(e)}")
-            
+
+@login_required            
 def showProduct(request):
     Productos = Producto.objects.all()
     return render(request, 'showProduct.html', {'Productos': Productos})
 
+@login_required
 def verPedido(request, idMesa):
     print (idMesa)
     pedidos = Pedido.objects.filter(mesa__numero=idMesa)
     return render(request, 'verPedido.html', {'pedidos': pedidos, 'idMesa': idMesa})
 
-
+@login_required
 def tomarPedido(request, idMesa):
-        productos = Producto.objects.all()
-        return render(request, 'tomarPedido.html', {'Productos': productos})
+    # Obtener solo los productos disponibles
+    productos_disponibles = Producto.objects.filter(disponible=True)
+    idMesa = idMesa
+    print(idMesa)
+    return render(request, 'tomarPedido.html', {'Productos': productos_disponibles, 'idMesa': idMesa})
 
-def savePedido(request):
-    productos_seleccionados = request.POST.getlist('producto')
-    cantidad = int(request.POST['cantidad'])
 
-    id_mesero = request.user.id
-    id_mesa = 1  # Supongamos que la mesa tiene el id 1
+@login_required
+def savePedido(request, idMesa):
+    if request.method == 'POST':
+        # Obtener los productos seleccionados y sus cantidades del formulario
+        productos_seleccionados = request.POST.getlist('productos_seleccionados[]')
+        cantidades = {key.split('_')[1]: value for key, value in request.POST.items() if key.startswith('cantidad_')}
+        idMesero = request.user.id
+        idMesa = idMesa
+        # Guardar los productos seleccionados en la base de datos
+        for producto_id in productos_seleccionados:
+            
+            cantidad = int(cantidades.get(producto_id, 0))
+            if cantidad > 0:
+                cantidad = cantidad
+                print(producto_id)
+                print(idMesero)
+                print(idMesa)
+                print(cantidad)
+                pedido = Pedido.objects.create(cantidad = cantidad , idMesero_id= idMesero, mesa_id=idMesa , idProducto_id = producto_id)
+                pedido.save()
+                 
 
-    for producto_id in productos_seleccionados:
-        if producto_id:  # Verificar si el producto_id no está vacío
-         producto = Producto.objects.get(pk=producto_id)
-         pedido = Pedido.objects.create(
-             cantidad=cantidad,
-             mesa_id=id_mesa,
-             idMesero_id=id_mesero,
-             idProducto_id=producto_id)
-         pedido.save()  # Guardar el pedido en la base de datos
-         print(id_mesero)
-         print(cantidad)
-         print(producto_id)
-         print(id_mesa)
-    return redirect('verMesas')  
-    
+        # Después de guardar el pedido, redirigir a alguna página, por ejemplo:
+        return redirect('verMesas')
+
+@login_required
 def cambiar_estado_pedido(request, pedido_id):
     pedido = Pedido.objects.get(idPedido=pedido_id)
     pedido.hecho = not pedido.hecho  
     pedido.save()
-    return redirect('chef')    
+    return redirect('chef') 
 
+@login_required
 def  actualizarDatosUsuario(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':   
