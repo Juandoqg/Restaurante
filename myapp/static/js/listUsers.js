@@ -277,6 +277,18 @@ const initDatatable = async () => {
     dataTable = $('#datatable-users').DataTable(dataTableOptions);
 
     dataTableInit = true;
+
+    const bindDeleteUserButtons = () => {
+        const deleteButtons = document.querySelectorAll('.delete-user-button');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const userId = button.dataset.userId;
+                await deleteUser(userId);
+            });
+        });
+    };
+    
+
 };
 
 const listusers = async () => {
@@ -321,23 +333,45 @@ const listusers = async () => {
     } catch (ex) {
         alert(ex);
     }
+    bindDeleteUserButtons();
 }
+
 
 const deleteUser = async (userId) => {
     try {
-        const response = await fetch(`/deleteUser/${userId}`, {
-
+        const result = await Swal.fire({
+            title: "¿Quieres eliminar al usuario?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            confirmButtonColor: "#dc3545", // Color rojo para el botón "Eliminar"
+            denyButtonText: `No eliminar`,
+            denyButtonColor: "#28a745", // Color verde para el botón "No eliminar"
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                confirmButton: "btn btn-danger",
+                denyButton: "btn btn-success",
+                cancelButton: "btn btn-primary"
+            }
         });
 
-        if (response.ok) {
-            $(`#user-${userId}`).remove();
-        } else {
-            throw new Error('Failed to delete user');
+        if (result.isConfirmed) {
+            const response = await fetch(`/deleteUser/${userId}`);
+
+            if (response.ok) {
+                $(`#user-${userId}`).remove();
+                Swal.fire("Usuario eliminado correctamente", "", "success");
+            } else {
+                throw new Error('Failed to delete user');
+            }
+        } else if (result.isDenied) {
+            Swal.fire("Cambios no guardados", "", "info");
         }
     } catch (ex) {
         alert(ex);
     }
-}
+};
+
 
 
 const editUser = async (userId) => {
