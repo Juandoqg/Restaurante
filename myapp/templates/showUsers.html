@@ -67,6 +67,9 @@
 
     <!-- Modal de Edición de Usuario -->
     <div class="ventanaGuardarDatos">
+
+      <input type="hidden" id="edit-user-id"/>
+
       <div
         class="modal fade"
         id="editUserModal"
@@ -176,7 +179,7 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onclick="guardarCambiosUsuario()"
+                  onclick="guardarCambios($('#edit-user-id').val())"
                 >
                   Guardar Cambios
                 </button>
@@ -187,34 +190,7 @@
       </div>
     </div>
 
-    <script>
-      function guardarCambiosUsuario() {
-        var id = document.getElementById("edit-user-id").value;
-        var usuarioActivo = document.querySelector(
-          'input[name="option"]:checked'
-        ).value;
-        var correo = document.getElementById("edit-user-firstname").value;
-        var nombre = document.getElementById("edit-user-lastname").value;
-        var apellido = document.getElementById("edit-user-lastname").value;
-        var username = document.getElementById("edit-user-lastname").value;
-        var tipoEmpleado = document.getElementById("country").value;
-
-        // Crear un objeto con los datos del usuario
-        var datosUsuario = {
-          id: id,
-          usuarioActivo: usuarioActivo,
-          correo: correo,
-          nombre: nombre,
-          apellido: apellido,
-          username: username,
-          tipoEmpleado: tipoEmpleado,
-        };
-
-        console.log(datosUsuario)
-      }
-
-
-    </script>
+    
 
     <!-- Bootstrap -->
     <script

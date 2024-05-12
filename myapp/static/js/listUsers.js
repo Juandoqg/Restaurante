@@ -278,21 +278,12 @@ const initDatatable = async () => {
 
     dataTableInit = true;
 
-    const bindDeleteUserButtons = () => {
-        const deleteButtons = document.querySelectorAll('.delete-user-button');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', async () => {
-                const userId = button.dataset.userId;
-                await deleteUser(userId);
-            });
-        });
-    };
-    
-
 };
+
 
 const listusers = async () => {
     try {
+
         const response = await fetch('http://127.0.0.1:8000/listUsers/')
         const data = await response.json();
         let content = ``;
@@ -333,7 +324,7 @@ const listusers = async () => {
     } catch (ex) {
         alert(ex);
     }
-    bindDeleteUserButtons();
+
 }
 
 
@@ -376,16 +367,63 @@ const deleteUser = async (userId) => {
 
 const editUser = async (userId) => {
     try {
-        // Tu código para obtener los detalles del usuario con el ID proporcionado
-        
-        // Llena el formulario de edición con los datos del usuario obtenidos
-        $('#editUserModal').modal('show'); // Abre el modal de edición
+
+        $('#edit-user-id').val(userId);
+        $('#editUserModal').modal('show');
         console.log(userId)
     } catch (ex) {
         alert(ex);
     }
 };
 
+const guardarCambios = async (userId) => {
+    console.log("ID usuario editar: " + userId)
+    try {
+        const result = await Swal.fire({
+            title: "¿Quieres guardar los datos del usuaio??",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            confirmButtonColor: "#28a745",
+            denyButtonText: `No guardar`,
+            denyButtonColor: "#dc3545",
+            customClass: {
+                confirmButton: "btn btn-danger",
+                denyButton: "btn btn-success",
+                cancelButton: "btn btn-primary"
+            }
+        });
+
+        if (result.isConfirmed) {
+            const isActive = document.querySelector('input[name="option"]:checked').value === 'option1';
+            const email = document.getElementById('edit-user-firstname').value;
+            const firstName = document.getElementById('edit-user-lastname').value;
+            const lastName = document.getElementById('edit-user-lastname').value;
+            const username = document.getElementById('edit-user-lastname').value;
+            const userType = document.getElementById('country').value;
+
+            const formData = new FormData();
+            formData.append('is_active', isActive);
+            formData.append('email', email);
+            formData.append('first_name', firstName);
+            formData.append('last_name', lastName);
+            formData.append('username', username);
+            formData.append('userType', userType);
+
+            response = fetch(`/actualizarDatosUsuario/${userId}/`, {
+                method: 'POST',
+                body: formData,
+            })
+
+            if (response.ok) {
+                Swal.fire("Usuario actulizado correctamente", "", "success");
+            } else {
+                Swal.fire("Error al actulizar al usuario", "", "error");
+            }
+        }
+    } catch (ex) {
+        alert(ex);
+    }
+};
 
 
 
