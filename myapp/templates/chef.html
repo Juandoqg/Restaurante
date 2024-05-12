@@ -27,6 +27,7 @@
                         <th>Mesa</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
+                        <th>Nota</th>
                         <th>Estado del pedido</th>
                         <th>Acción</th>
                     </tr>
@@ -39,6 +40,7 @@
                         <td>{{ pedido.mesa.numero }}</td>
                         <td>{{ pedido.idProducto.nombre }}</td>
                         <td>{{ pedido.cantidad }}</td>
+                        <td>{{ pedido.nota }}</td>
                         {% if pedido.hecho  %}
                         <td>Listo</td>
                         {% else %}

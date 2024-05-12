@@ -21,11 +21,13 @@ class Mesa (models.Model):
 
 class Pedido(models.Model):
     idPedido = models.AutoField(primary_key=True)
+    numeroPedido = models.IntegerField()
     idMesero = models.ForeignKey(User, on_delete=models.CASCADE)
     mesa = models.ForeignKey(Mesa,on_delete=models.CASCADE)
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
     hecho = models.BooleanField(default=False)
+    nota = models.TextField(blank=True, null=True) 
 
 class Factura(models.Model):
     idFactura = models.AutoField(primary_key=True)

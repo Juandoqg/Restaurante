@@ -32,6 +32,11 @@
                         <!-- Agregar checkbox para seleccionar el producto -->
                         <input type="checkbox" id="producto-{{ producto.idProducto }}" name="productos_seleccionados[]" value="{{ producto.idProducto }}">
                       </div>
+                      <!-- Agregar campo de notas -->
+                      <div class="form-group mt-3">
+                        <label for="nota-{{ producto.idProducto }}">Nota:</label>
+                        <input type="text" id="nota-{{ producto.idProducto }}" name="notas_{{ producto.idProducto }}" class="form-control" placeholder="Alergias, observaciones, etc.">
+                      </div>
                     </div>
                   </div>
                 </div>
