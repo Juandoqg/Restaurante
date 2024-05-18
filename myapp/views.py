@@ -21,25 +21,30 @@ def signin(request):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
+            
             if user is None:
                 errors = {}
                 if not username:
-                    errors['username_error'] = "Por favor, introduce tu nombre de usuario."
+                    errors = "Por favor, introduce tu nombre de usuario."
                 if not password:
-                    errors['password_error'] = "Por favor, introduce tu contraseña."
+                    errors = "Por favor, introduce tu contraseña."
                 else:
-                    errors['username_error'] = "El nombre de usuario o la contraseña no coinciden."
-                return render(request, 'index.html', errors)
-            login(request, user)
-            if user.is_waiter == 1:
-                return redirect('/verMesas')
-            if user.is_chef == 1:
-                return redirect('/chef')
-            if user.is_superuser == 1:
-                return redirect('/administrador')
+                    errors = "El nombre de usuario o la contraseña no coinciden."
+                return render(request, 'index.html', {'error': True, 'error_message': errors})
+            else :
+             login(request, user)
+             success_url = ''
+             if user.is_waiter:
+                success_url = '/verMesas'
+             elif user.is_chef:
+                success_url = '/chef'
+             elif user.is_superuser:
+                success_url = '/administrador'
             
+             return render(request, 'index.html', {'success': True, 'success_url': success_url})
+        
         except Exception as e:
-            return HttpResponse(f"Error al logearse: {str(e)}")
+            return render(request, 'index.html', {'error': True, 'error_message': str(e)})
 
 @login_required
 def createUser(request):
@@ -48,25 +53,25 @@ def createUser(request):
     else:
         try:
             if request.POST["Tipo"] == 'Mesero':
-                    is_waiter=1
-                    is_chef=0
+                is_waiter = 1
+                is_chef = 0
             else:
-                    is_chef=1
-                    is_waiter =0
+                is_chef = 1
+                is_waiter = 0
 
             user = User.objects.create_user(
-                request.POST["username"],
+                username=request.POST["username"],
                 password=request.POST["password"],
                 first_name=request.POST["name"],
                 last_name=request.POST["lastname"],
                 email=request.POST["email"],
-                is_waiter = is_waiter,
-                is_chef = is_chef
-            )        
+                is_waiter=is_waiter,
+                is_chef=is_chef
+            )
             user.save()
-            return redirect('administrador')
+            return render(request, 'createUser.html', {'success': True})
         except Exception as e:
-            return HttpResponse(f"Error al registrar el usuario: {str(e)}")   
+            return render(request, 'createUser.html', {'success': False, 'error': str(e)}) 
 
 @login_required       
 def administrador(request):
@@ -156,9 +161,9 @@ def createProduct(request):
 
             # Guardar el producto en la base de datos
             producto.save()
-            return redirect('administrador')
+            return render(request, 'createProduct.html', {'success': True})
         except Exception as e:
-            return HttpResponse(f"Error al registrar el producto: {str(e)}")
+            return render(request, 'createProduct.html', {'success': False, 'error': str(e)})
 
 @login_required            
 def showProduct(request):

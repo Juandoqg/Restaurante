@@ -43,9 +43,34 @@
       </div>
     </div>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  {% if success %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        title: 'Inicio de sesión exitoso',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = "{{ success_url }}";
+      });
+    });
+  </script>
+  {% elif error %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        title: 'Error al iniciar sesión',
+        text: '{{ error_message }}',
+        icon: 'error'
+      });
+    });
+  </script>
+  {% endif %}
+
 </body>
 
 </html>
