@@ -1,121 +1,125 @@
 body {
-    font-family:sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 20px;
-    background-image:url('../img/Fondo.jpg');
+    background-image: url('../img/Fondo.jpg');
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .titulos {
     text-align: center;
-    border-radius: 15px; /* Incrementé el radio para que los bordes sean más redondeados */
+    border-radius: 15px;
     background-color: #fbe5ad;
-    width: 40%;
-    margin: 0 auto; /* Para centrar horizontalmente */
-}
-
-
-.head-tabla{
-    background-color: #87694c;
-    color: white;
-}
-
-.tablaItems{
-    background-color: #fbe5ad;
-    border-radius: 30px;
-}
-
-#botones{
-    background-color: #87694c;
-}
-
-.logout{
-    position: absolute;
-    right:5%;
-    top: 5%;
-}
-/* Estilos anteriores con css (Se cambiaron a boostrap)
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-}
-
-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: black;
 }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-    color: #333;
-}
-
-tr:hover {
-    background-color: #f9f9f9;
-}
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
+.head-tabla {
+    background-color: #87694c; /* Dark background for header */
     color: white;
     text-align: center;
-    text-decoration: none;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(128, 128, 128, 0.2); /* Light gray hover effect */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fbe5ad;
+    color: black; /* Light gray stripe for odd rows */
+}
+
+.table {
+    border-radius: 15px;
+    overflow: hidden; /* Ensures rounded corners are visible */
+    background-color: #eed9a4; /* Black background for the table */
+    color: black; /* White text color */
+    margin: 0 auto; /* Center the table */
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.table thead th {
+    border-bottom: 2px solid #ffffff;
+}
+
+#botones {
+    background-color: #07730e; /* Dark background for buttons */
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    color: white;
+    border-radius: 10px;
 }
 
-.button:hover {
-    background-color: #45a049;
+#botones:hover {
+    background-color: #3fa82a; /* Slightly lighter hover effect for buttons */
+}
+
+.logout {
+    position: fixed; 
+    right: 20px;
+    top: 20px;
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 15px;
+    background-color: #d33; 
+    color: white; 
+    z-index: 1000; 
 }
 
 
-@media screen and (max-width: 600px) {
-    table {
-        border: 0;
+@media (max-width: 767px) {
+    .titulos {
+       margin-top: 50px;
+    }
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
     }
 
-    table thead {
+    .table {
+        background-color: transparent;
+    }
+
+    .table thead {
         display: none;
     }
 
-    table tr {
-        border-bottom: 3px solid #ddd;
+    .table tr {
         display: block;
-        margin-bottom: 10px;
+        margin-bottom: 1rem;
+        background-color: rgba(80, 77, 69, 0.9); /* Light blue background for mobile cards */
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        color: white;
     }
 
-    table td {
-        border-bottom: none;
-        display: block;
-        text-align: right;
+    .table td {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1rem;
+        border-bottom: 1px solid #ddd;
+        padding: 8px 10px;
     }
 
-    table td:last-child {
-        border-bottom: 3px solid #ddd;
-    }
-
-    table td:before {
+    .table td::before {
         content: attr(data-label);
         font-weight: bold;
-        text-transform: uppercase;
-        margin-bottom: 5px;
-        display: block;
+        margin-right: 10px;
+    }
+
+    .table td:last-child {
+        border-bottom: 0;
     }
 }
-
-*/
