@@ -233,13 +233,11 @@ def actualizarDatosUsuario(request, user_id):
             user = get_object_or_404(User, id=user_id)
             data = json.loads(request.body)
 
-            # Actualiza los campos del usuario
             user.email = data.get('email', user.email)
             user.first_name = data.get('first_name', user.first_name)
             user.last_name = data.get('last_name', user.last_name)
             user.username = data.get('username', user.username)
 
-            # Guarda el usuario actualizado
             user.save()
 
             # Devuelve una respuesta de éxito
