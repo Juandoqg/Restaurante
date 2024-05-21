@@ -10,6 +10,7 @@ from mysite import settings
 from django.contrib.auth.decorators import login_required
 import os
 from django.core import serializers
+from django.utils import timezone
 
 # Create your views here.
 
@@ -236,6 +237,19 @@ def  actualizarDatosUsuario(request, user_id):
         user.last_name = request.POST.get('last_name')
         user.username = request.POST.get('username')
         user.save()
+
+@login_required            
+def verFacturaID(request , idMesa):
+    pedidos = Pedido.objects.filter(mesa__numero=idMesa)
+    user_id = request.user.id
+    hora = timezone.localtime(timezone.now())
+    total = sum(pedido.idProducto.precio * pedido.cantidad for pedido in pedidos)
+    print(total)
+    return render(request, 'verFactura.html', {'pedidos' : pedidos , 'user_id': user_id,'hora' : hora, 'idMesa': idMesa , 'total' :total})
+
+@login_required
+def verFactura(request):
+    return render(request, 'verFactura.html')
     
    
 @login_required

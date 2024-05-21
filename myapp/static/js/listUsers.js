@@ -284,7 +284,7 @@ const initDatatable = async () => {
 const listusers = async () => {
     try {
 
-        const response = await fetch('http://127.0.0.1:8000/listUsers/')
+        const response = await fetch('http://127.0.0.1:3000/listUsers/')
         const data = await response.json();
         let content = ``;
         let userType = '';
