@@ -10,6 +10,7 @@ from mysite import settings
 from django.contrib.auth.decorators import login_required
 import os
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 import json
 # Create your views here.
 
@@ -226,16 +227,49 @@ def cambiar_estado_pedido(request, pedido_id):
     pedido.save()
     return redirect('chef') 
 
+@csrf_exempt
+def actualizarDatosUsuario(request, user_id):
+    if request.method == 'PUT':
+        try:
+            user = get_object_or_404(User, id=user_id)
+            data = json.loads(request.body)
+
+            user.email = data.get('email', user.email)
+            user.first_name = data.get('first_name', user.first_name)
+            user.last_name = data.get('last_name', user.last_name)
+            user.username = data.get('username', user.username)
+
+            user.save()
+
+            # Devuelve una respuesta de éxito
+            return JsonResponse({
+                'id': user.id,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'username': user.username
+            })
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return HttpResponseNotAllowed(['PUT'])
+
+@login_required            
+def verFacturaID(request , idMesa):
+    pedidos = Pedido.objects.filter(mesa__numero=idMesa)
+    user_id = request.user.id
+    hora = timezone.localtime(timezone.now())
+    total = sum(pedido.idProducto.precio * pedido.cantidad for pedido in pedidos)
+    print(total)
+    return render(request, 'verFactura.html', {'pedidos' : pedidos , 'user_id': user_id,'hora' : hora, 'idMesa': idMesa , 'total' :total})
+
 @login_required
-def  actualizarDatosUsuario(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    if request.method == 'POST':   
-        user.is_active = request.POST.get('is_active') == 'true'
-        user.email = request.POST.get('email')
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.username = request.POST.get('username')
-        user.save()
+def verFactura(request):
+    return render(request, 'verFactura.html')
+
     
    
 @login_required
