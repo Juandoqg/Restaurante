@@ -226,37 +226,16 @@ def cambiar_estado_pedido(request, pedido_id):
     pedido.save()
     return redirect('chef') 
 
-@csrf_exempt
-def actualizarDatosUsuario(request, user_id):
-    if request.method == 'PUT':
-        try:
-            user = get_object_or_404(User, id=user_id)
-            data = json.loads(request.body)
-
-            user.email = data.get('email', user.email)
-            user.first_name = data.get('first_name', user.first_name)
-            user.last_name = data.get('last_name', user.last_name)
-            user.username = data.get('username', user.username)
-
-            user.save()
-
-            # Devuelve una respuesta de éxito
-            return JsonResponse({
-                'id': user.id,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'username': user.username
-            })
-
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-    else:
-        return HttpResponseNotAllowed(['PUT'])
-
-
+@login_required
+def  actualizarDatosUsuario(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':   
+        user.is_active = request.POST.get('is_active') == 'true'
+        user.email = request.POST.get('email')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.username = request.POST.get('username')
+        user.save()
     
    
 @login_required
