@@ -7,6 +7,7 @@
     <title>Factura</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/verFactura.css' %}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div class="container">
@@ -49,12 +50,31 @@
             </tr>
         </table>
         <div class="text-center mt-4">
-            <a href="{% url 'borrarPedido' idMesa %}" class="btn btn-success btn-sm">Aceptar y volver</a>
+            <a href="{% url 'borrarPedido' idMesa %}" class="btn btn-success btn-sm" id="borrarPedidoLink">Aceptar y volver</a>
         </div>
         <div class="footer">
             &copy; 2024 La Patrana. Todos los derechos reservados.
         </div>
     </div>
-    
+
+    <script>
+        document.getElementById('borrarPedidoLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cerrar pedido',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = this.href;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -189,34 +189,31 @@ def tomarPedido(request, idMesa):
 def savePedido(request, idMesa):
     if request.method == 'POST':
         try:
-            # Obtener los productos seleccionados, sus cantidades y notas del formulario
             productos_seleccionados = request.POST.getlist('productos_seleccionados[]')
             cantidades = {key.split('_')[1]: value for key, value in request.POST.items() if key.startswith('cantidad_')}
             notas = {key.split('_')[1]: value for key, value in request.POST.items() if key.startswith('notas_')}
             
             idMesero = request.user.id
-            idMesa = idMesa
             
-            # Guardar los productos seleccionados en la base de datos
             for producto_id in productos_seleccionados:
                 cantidad = int(cantidades.get(producto_id, 0))
-                nota = notas.get(producto_id, '')  # Obtener la nota asociada al producto
-                print(nota)
+                nota = notas.get(producto_id, '') 
                 if cantidad > 0:
                     pedido = Pedido.objects.create(
                         numeroPedido=idMesa,
                         cantidad=cantidad,
-                        nota=nota,  
+                        nota=nota,
                         idMesero_id=idMesero,
                         mesa_id=idMesa,
                         idProducto_id=producto_id
                     )
                     pedido.save()
-            # Después de guardar el pedido, redirigir a alguna página, por ejemplo:
-            return redirect('verMesas')
+            return render(request, 'tomarPedido.html', {'success': True, 'idMesa': idMesa})
+        
         except Exception as e:
-            # Manejar cualquier error que pueda ocurrir durante la creación del pedido
-            return HttpResponseServerError(f"Error al guardar el pedido: {e}")
+            return render(request, 'tomarPedido.html', {'error': True, 'error_message': str(e), 'idMesa': idMesa})
+    else:
+        return render(request, 'tomarPedido.html', {'idMesa': idMesa})
 
 
 @login_required
