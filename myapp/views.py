@@ -259,6 +259,11 @@ def actualizarDatosUsuario(request, user_id):
 @login_required            
 def verFacturaID(request, idMesa):
     pedidos = Pedido.objects.filter(mesa__numero=idMesa)
+    
+    if not pedidos.exists():
+        # Redirigir o mostrar un mensaje si no hay pedidos
+        return render(request, 'verMesas.html', {'idMesa': idMesa})
+    
     user_id = request.user.id
     hora = timezone.localtime(timezone.now())
     fecha = hora.date()
@@ -281,7 +286,7 @@ def verFacturaID(request, idMesa):
     )
     factura.save()
 
-    return render(request, 'verFactura.html', {
+    return render(request, 'verFacturaID.html', {
         'pedidos': pedidos,
         'user_id': user_id,
         'hora': hora,
@@ -289,11 +294,30 @@ def verFacturaID(request, idMesa):
         'total': total
     })
 
-@login_required
 def verFactura(request):
-    return render(request, 'verFactura.html')
+    facturas = Factura.objects.all()
+    processed_facturas = []
 
-    
+    for factura in facturas:
+        productos = factura.cosasPedidas.split(', ')
+        productos_procesados = []
+        for producto in productos:
+            nombre, cantidad = producto.rsplit(' (Cantidad: ', 1)
+            cantidad = cantidad.rstrip(')')
+            productos_procesados.append({
+                'nombre': nombre,
+                'cantidad': cantidad
+            })
+        processed_facturas.append({
+            'factura': factura,
+            'productos': productos_procesados
+        })
+
+    return render(request, 'verFactura.html', {'processed_facturas': processed_facturas})
+
+def borrarPedido (request, idMesa):
+    Pedido.objects.filter(mesa=idMesa).delete()
+    return redirect('verMesas')  
    
 @login_required
 def signout(request):
