@@ -14,7 +14,7 @@
               style="max-width: 255px" />
         <table class="info-table">
             <tr>
-                <th>ID Factura</th>
+                <th>Numero de mesa</th>
                 <td>{{ idMesa }}</td>
             </tr>
             <tr>
@@ -36,14 +36,14 @@
             <tr>
                 <td>{{pedido.idProducto.nombre}}</td>
                 <td>{{pedido.cantidad}}</td>
-                <td>{{pedido.idProducto.precio}}</td>
+                <td>${{pedido.idProducto.precio}}</td>
             </tr>
             {% endfor %}
             <tr>
                 <th>Total</th>
                 <td></td>
                 <td>
-                {{total}}
+                ${{total}}
                 </td>
             </tr>
         </table>

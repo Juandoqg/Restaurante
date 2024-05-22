@@ -6,6 +6,7 @@ from .models import User
 from .models import Mesa
 from .models import Producto
 from .models import Pedido
+from .models import Factura
 from mysite import settings
 from django.contrib.auth.decorators import login_required
 import os
@@ -173,7 +174,6 @@ def showProduct(request):
 
 @login_required
 def verPedido(request, idMesa):
-    print (idMesa)
     pedidos = Pedido.objects.filter(mesa__numero=idMesa)
     return render(request, 'verPedido.html', {'pedidos': pedidos, 'idMesa': idMesa})
 
@@ -182,7 +182,6 @@ def tomarPedido(request, idMesa):
     # Obtener solo los productos disponibles
     productos_disponibles = Producto.objects.filter(disponible=True)
     idMesa = idMesa
-    print(idMesa)
     return render(request, 'tomarPedido.html', {'Productos': productos_disponibles, 'idMesa': idMesa})
 
 
@@ -239,13 +238,37 @@ def  actualizarDatosUsuario(request, user_id):
         user.save()
 
 @login_required            
-def verFacturaID(request , idMesa):
+def verFacturaID(request, idMesa):
     pedidos = Pedido.objects.filter(mesa__numero=idMesa)
     user_id = request.user.id
     hora = timezone.localtime(timezone.now())
+    fecha = hora.date()
     total = sum(pedido.idProducto.precio * pedido.cantidad for pedido in pedidos)
-    print(total)
-    return render(request, 'verFactura.html', {'pedidos' : pedidos , 'user_id': user_id,'hora' : hora, 'idMesa': idMesa , 'total' :total})
+
+    # Formatear los productos pedidos en un solo string
+    cosas_pedidas = ', '.join([f"{pedido.idProducto.nombre} (Cantidad: {pedido.cantidad})" for pedido in pedidos])
+
+    # Obtener la mesa
+    mesa = Mesa.objects.get(numero=idMesa)
+
+    # Crear y guardar la nueva factura
+    factura = Factura(
+        valor=total,
+        hora=hora,
+        fecha=fecha,
+        cosasPedidas=cosas_pedidas,
+        idMesero=request.user,
+        mesa=mesa
+    )
+    factura.save()
+
+    return render(request, 'verFactura.html', {
+        'pedidos': pedidos,
+        'user_id': user_id,
+        'hora': hora,
+        'idMesa': idMesa,
+        'total': total
+    })
 
 @login_required
 def verFactura(request):
