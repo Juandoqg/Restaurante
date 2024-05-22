@@ -14,7 +14,7 @@ urlpatterns = [
      path("listMesasPorId/<int:idMesa>",views.listMesasPorId, name = "listMesasPorId"),
      path("listProductos/",views.listProductos, name = "listProductos"),
      path("deleteUser/<int:user_id>/",views.deleteUser, name ="deleteUser"),
-     path("actulizarDatosUsuario/<int:user_is>/",views.actualizarDatosUsuario,name="actulizarUsuario"),
+     path("actulizarDatosUsuario/<int:user_id>/",views.actualizarDatosUsuario,name="actulizarUsuario"),
      path('createProduct/', views.createProduct, name='createProduct'),
      path('tomarPedido/<int:idMesa>', views.tomarPedido, name='tomarPedido'),
      path('savePedido/<int:idMesa>', views.savePedido, name='savePedido'),
@@ -23,6 +23,4 @@ urlpatterns = [
      path('cambiar_estado_pedido/<int:pedido_id>/', views.cambiar_estado_pedido, name='cambiar_estado_pedido'),
      path('verFacturaID/<int:idMesa>/', views.verFacturaID, name='verFacturaID'),
      path('verFactura/', views.verFactura, name='verFactura')
-
-
 ] 
