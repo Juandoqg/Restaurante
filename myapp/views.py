@@ -6,6 +6,7 @@ from .models import User
 from .models import Mesa
 from .models import Producto
 from .models import Pedido
+from .models import Factura
 from mysite import settings
 from django.contrib.auth.decorators import login_required
 import os
@@ -173,7 +174,6 @@ def showProduct(request):
 
 @login_required
 def verPedido(request, idMesa):
-    print (idMesa)
     pedidos = Pedido.objects.filter(mesa__numero=idMesa)
     return render(request, 'verPedido.html', {'pedidos': pedidos, 'idMesa': idMesa})
 
@@ -182,7 +182,6 @@ def tomarPedido(request, idMesa):
     # Obtener solo los productos disponibles
     productos_disponibles = Producto.objects.filter(disponible=True)
     idMesa = idMesa
-    print(idMesa)
     return render(request, 'tomarPedido.html', {'Productos': productos_disponibles, 'idMesa': idMesa})
 
 
@@ -190,34 +189,31 @@ def tomarPedido(request, idMesa):
 def savePedido(request, idMesa):
     if request.method == 'POST':
         try:
-            # Obtener los productos seleccionados, sus cantidades y notas del formulario
             productos_seleccionados = request.POST.getlist('productos_seleccionados[]')
             cantidades = {key.split('_')[1]: value for key, value in request.POST.items() if key.startswith('cantidad_')}
             notas = {key.split('_')[1]: value for key, value in request.POST.items() if key.startswith('notas_')}
             
             idMesero = request.user.id
-            idMesa = idMesa
             
-            # Guardar los productos seleccionados en la base de datos
             for producto_id in productos_seleccionados:
                 cantidad = int(cantidades.get(producto_id, 0))
-                nota = notas.get(producto_id, '')  # Obtener la nota asociada al producto
-                print(nota)
+                nota = notas.get(producto_id, '') 
                 if cantidad > 0:
                     pedido = Pedido.objects.create(
                         numeroPedido=idMesa,
                         cantidad=cantidad,
-                        nota=nota,  
+                        nota=nota,
                         idMesero_id=idMesero,
                         mesa_id=idMesa,
                         idProducto_id=producto_id
                     )
                     pedido.save()
-            # Después de guardar el pedido, redirigir a alguna página, por ejemplo:
-            return redirect('verMesas')
+            return render(request, 'tomarPedido.html', {'success': True, 'idMesa': idMesa})
+        
         except Exception as e:
-            # Manejar cualquier error que pueda ocurrir durante la creación del pedido
-            return HttpResponseServerError(f"Error al guardar el pedido: {e}")
+            return render(request, 'tomarPedido.html', {'error': True, 'error_message': str(e), 'idMesa': idMesa})
+    else:
+        return render(request, 'tomarPedido.html', {'idMesa': idMesa})
 
 
 @login_required
@@ -259,19 +255,67 @@ def actualizarDatosUsuario(request, user_id):
         return HttpResponseNotAllowed(['PUT'])
 
 @login_required            
-def verFacturaID(request , idMesa):
+def verFacturaID(request, idMesa):
     pedidos = Pedido.objects.filter(mesa__numero=idMesa)
+    
+    if not pedidos.exists():
+        # Redirigir o mostrar un mensaje si no hay pedidos
+        return render(request, 'verMesas.html', {'idMesa': idMesa})
+    
     user_id = request.user.id
     hora = timezone.localtime(timezone.now())
+    fecha = hora.date()
     total = sum(pedido.idProducto.precio * pedido.cantidad for pedido in pedidos)
-    print(total)
-    return render(request, 'verFactura.html', {'pedidos' : pedidos , 'user_id': user_id,'hora' : hora, 'idMesa': idMesa , 'total' :total})
 
-@login_required
+    # Formatear los productos pedidos en un solo string
+    cosas_pedidas = ', '.join([f"{pedido.idProducto.nombre} (Cantidad: {pedido.cantidad})" for pedido in pedidos])
+
+    # Obtener la mesa
+    mesa = Mesa.objects.get(numero=idMesa)
+
+    # Crear y guardar la nueva factura
+    factura = Factura(
+        valor=total,
+        hora=hora,
+        fecha=fecha,
+        cosasPedidas=cosas_pedidas,
+        idMesero=request.user,
+        mesa=mesa
+    )
+    factura.save()
+
+    return render(request, 'verFacturaID.html', {
+        'pedidos': pedidos,
+        'user_id': user_id,
+        'hora': hora,
+        'idMesa': idMesa,
+        'total': total
+    })
+
 def verFactura(request):
-    return render(request, 'verFactura.html')
+    facturas = Factura.objects.all()
+    processed_facturas = []
 
-    
+    for factura in facturas:
+        productos = factura.cosasPedidas.split(', ')
+        productos_procesados = []
+        for producto in productos:
+            nombre, cantidad = producto.rsplit(' (Cantidad: ', 1)
+            cantidad = cantidad.rstrip(')')
+            productos_procesados.append({
+                'nombre': nombre,
+                'cantidad': cantidad
+            })
+        processed_facturas.append({
+            'factura': factura,
+            'productos': productos_procesados
+        })
+
+    return render(request, 'verFactura.html', {'processed_facturas': processed_facturas})
+
+def borrarPedido (request, idMesa):
+    Pedido.objects.filter(mesa=idMesa).delete()
+    return redirect('verMesas')  
    
 @login_required
 def signout(request):

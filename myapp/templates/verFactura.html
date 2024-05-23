@@ -9,47 +9,56 @@
 </head>
 <body>
     <div class="container">
-        <h1>Factura</h1>
-        <img src="{% static 'img/logo.svg' %}" alt="Logo principal" class="img-fluid mb-3"
-              style="max-width: 255px" />
-        <table class="info-table">
-            <tr>
-                <th>ID Factura</th>
-                <td>{{ idMesa }}</td>
-            </tr>
-            <tr>
-                <th>Id del mesero</th>
-                <td>{{ user_id }}</td>
-            </tr>
-            <tr>
-                <th>Hora</th>
-                <td>{{ hora }}</td>
-            </tr>
-        </table>
-        <table class="product-table">
-            <tr>
-                <th>Nombre del Producto</th>
-                <th>Cantidad</th>
-                <th>Valor del Pedido</th>
-            </tr>
-            {% for pedido in pedidos %}
-            <tr>
-                <td>{{pedido.idProducto.nombre}}</td>
-                <td>{{pedido.cantidad}}</td>
-                <td>{{pedido.idProducto.precio}}</td>
-            </tr>
+        {% if processed_facturas %}
+            {% for processed_factura in processed_facturas %}
+                <div class="container">
+                    <h1>Factura</h1>
+                    <img src="{% static 'img/logo.svg' %}" alt="Logo principal" class="img-fluid mb-3" style="max-width: 255px" />
+                    <table class="info-table">
+                        <tr>
+                            <th>Número de factura</th>
+                            <td>{{ processed_factura.factura.idFactura }}</td>
+                        </tr>
+                        <tr>
+                            <th>Número de mesa</th>
+                            <td>{{ processed_factura.factura.mesa.numero }}</td>
+                        </tr>
+                        <tr>
+                            <th>Id del mesero</th>
+                            <td>{{ processed_factura.factura.idMesero.username }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha</th>
+                            <td>{{ processed_factura.factura.hora }}</td>
+                        </tr>
+                    </table>
+                    <table class="product-table">
+                        <tr>
+                            <th>Nombre del Producto</th>
+                            <th>Cantidad</th>
+                        </tr>
+                        {% for producto in processed_factura.productos %}
+                            <tr>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.cantidad }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <th>Total</th>
+                            <td>${{ processed_factura.factura.valor }}</td>
+                        </tr>
+                    </table>
+                    <div class="footer">
+                        &copy; 2024 La Patrana. Todos los derechos reservados.
+                    </div>
+                </div>
             {% endfor %}
-            <tr>
-                <th>Total</th>
-                <td></td>
-                <td>
-                {{total}}
-                </td>
-            </tr>
-        </table>
-        <div class="footer">
-            &copy; 2024 La Patrana. Todos los derechos reservados.
-        </div>
+        {% else %}
+            <div class="container">
+                <h2>No hay facturas disponibles</h2>
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>
+
