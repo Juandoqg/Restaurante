@@ -229,6 +229,7 @@ def cambiar_estado_pedido(request, pedido_id):
 
 @csrf_exempt
 def actualizarDatosUsuario(request, user_id):
+    print(request.body)
     if request.method == 'PUT':
         try:
             user = get_object_or_404(User, id=user_id)
@@ -240,14 +241,14 @@ def actualizarDatosUsuario(request, user_id):
             user.username = data.get('username', user.username)
 
             user.save()
-
+            
             # Devuelve una respuesta de éxito
             return JsonResponse({
                 'id': user.id,
                 'email': user.email,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'username': user.username
+                'username': user.username,
             })
 
         except json.JSONDecodeError:

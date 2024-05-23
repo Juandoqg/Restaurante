@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 const listMesas = async () => {
     try {
-        const response = await fetch('http://127.0.0.1:3000/listMesas/');
+        const response = await fetch('/listMesas/');
         const data = await response.json();
 
         // Selecciona el contenedor donde se mostrarán las tarjetas de mesa

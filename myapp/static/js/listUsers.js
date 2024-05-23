@@ -284,7 +284,7 @@ const initDatatable = async () => {
 const listusers = async () => {
     try {
 
-        const response = await fetch('http://127.0.0.1:3000/listUsers/')
+        const response = await fetch('/listUsers/')
         const data = await response.json();
         let content = ``;
         let userType = '';
@@ -364,7 +364,6 @@ const deleteUser = async (userId) => {
 };
 
 
-
 const editUser = async (userId) => {
     try {
 
@@ -394,36 +393,48 @@ const guardarCambios = async (userId) => {
         });
 
         if (result.isConfirmed) {
-            const isActive = document.querySelector('input[name="option"]:checked').value === 'option1';
-            const email = document.getElementById('edit-user-firstname').value;
-            const firstName = document.getElementById('edit-user-lastname').value;
+            const email = document.getElementById('edit-user-email').value;
+            const firstName = document.getElementById('edit-user-firstname').value;
             const lastName = document.getElementById('edit-user-lastname').value;
-            const username = document.getElementById('edit-user-lastname').value;
-            const userType = document.getElementById('country').value;
+            const username = document.getElementById('edit-user-username').value;
 
-            const formData = new FormData();
-            formData.append('is_active', isActive);
-            formData.append('email', email);
-            formData.append('first_name', firstName);
-            formData.append('last_name', lastName);
-            formData.append('username', username);
-            formData.append('userType', userType);
+            const data = {
+                email: email,
+                first_name: firstName,
+                last_name: lastName,
+                username: username
+            };
 
-            response = fetch(`/actualizarDatosUsuario/${userId}/`, {
-                method: 'POST',
-                body: formData,
-            })
+            console.log(data)
+
+            const response = await fetch(`/actulizarDatosUsuario/${userId}/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
             if (response.ok) {
-                Swal.fire("Usuario actulizado correctamente", "", "success");
+                const jsonResponse = await response.json();
+                Swal.fire({
+                    title: "Usuario actualizado correctamente",
+                    icon: "success"
+                }).then(() => {
+                    // Cerrar el modal
+                    $('#editUserModal').modal('hide');
+                    // Recargar la página
+                    window.location.reload();
+                });
             } else {
-                Swal.fire("Error al actulizar al usuario", "", "error");
+                Swal.fire("Error al actualizar al usuario", "", "error");
             }
         }
     } catch (ex) {
         alert(ex);
     }
 };
+
 
 
 

@@ -91,7 +91,6 @@
             <div class="modal-body">
               <!-- Formulario de Edición de Usuario -->
               <form id="editUserForm">
-                <input type="hidden" id="edit-user-id" />
                 <div class="mb-3">
                   <label
                     for="edit-user-firstname"
@@ -118,27 +117,27 @@
 
                 <div class="mb-3">
                   <label
-                    for="edit-user-firstname"
+                    for="edit-user-email"
                     class="form-label label-text-color"
                     >Correo electrónico</label
                   >
                   <input
                     type="email"
                     class="form-control"
-                    id="edit-user-firstname"
+                    id="edit-user-email"
                   />
                 </div>
 
                 <div class="mb-3">
                   <label
-                    for="edit-user-lastname"
+                    for="edit-user-firstname"
                     class="form-label label-text-color"
                     >Nombre</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="edit-user-lastname"
+                    id="edit-user-firstname"
                   />
                 </div>
 
@@ -157,33 +156,32 @@
 
                 <div class="mb-3">
                   <label
-                    for="edit-user-lastname"
+                    for="edit-user-username"
                     class="form-label label-text-color"
                     >Nombre de usuario</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="edit-user-lastname"
+                    id="edit-user-username"
                   />
                 </div>
 
                 <div class="mb-3">
-                  <label for="country">Selecciona tipo de usuario:</label>
-                  <select id="country" name="country">
+                  <label for="edit-usertype">Selecciona tipo de usuario:</label>
+                  <select id="edit-usertype" name="user-type">
                     <option value="Mesero">Mesero</option>
                     <option value="Chef">Chef</option>
                   </select>
                 </div>
-
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="guardarCambios($('#edit-user-id').val())"
-                >
-                  Guardar Cambios
-                </button>
               </form>
+              <button
+              type="button"
+              class="btn btn-primary"
+              onclick="guardarCambios($('#edit-user-id').val())"
+            >
+              Guardar Cambios
+            </button>
             </div>
           </div>
         </div>
