@@ -416,7 +416,6 @@ const guardarCambios = async (userId) => {
             });
 
             if (response.ok) {
-                const jsonResponse = await response.json();
                 Swal.fire({
                     title: "Usuario actualizado correctamente",
                     icon: "success"
