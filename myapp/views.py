@@ -266,6 +266,7 @@ def verFacturaID(request, idMesa):
     hora = timezone.localtime(timezone.now())
     fecha = hora.date()
     total = sum(pedido.idProducto.precio * pedido.cantidad for pedido in pedidos)
+    total_quantity = sum(pedido.cantidad for pedido in pedidos)  # Calculate total quantity
 
     # Formatear los productos pedidos en un solo string
     cosas_pedidas = ', '.join([f"{pedido.idProducto.nombre} (Cantidad: {pedido.cantidad})" for pedido in pedidos])
@@ -289,7 +290,8 @@ def verFacturaID(request, idMesa):
         'user_id': user_id,
         'hora': hora,
         'idMesa': idMesa,
-        'total': total
+        'total': total,
+        'total_quantity': total_quantity  # Pass the total quantity to the template
     })
 
 def verFactura(request):
