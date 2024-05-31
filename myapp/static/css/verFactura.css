@@ -9,9 +9,9 @@ body {
 .invoice-container {
     max-width: 700px;
     margin: 0 auto;
-    background-color: #b67e38;
+    background-color: #ffffff;
     padding: 20px;
-    box-shadow: 0 0 10px #b67e38;
+    box-shadow: 0 0 100px #b67e38;
     border-radius: 10px;
     margin-bottom: 20px;
     overflow: hidden;
@@ -25,14 +25,14 @@ h1 {
     text-align: center;
     color: #333;
     font-size: 24px;
-    color: #ffffff;
+    color: #000000;
     margin-bottom: 20px;
 }
 
 img {
     border-color: #333;
-    border-radius: 50%; /* Make the image round */
-    width: 150px; /* Ensure the image is a circle by setting width and height */
+    border-radius: 50%; 
+    width: 150px; 
     height: 150px;
     display: block;
     margin-left: auto;
@@ -44,14 +44,14 @@ img {
     margin-bottom: 0;
     border-collapse: separate;
     width: 100%;
-    border-spacing: 10px; /* Add spacing between table cells for better appearance */
+    border-spacing: 10px; 
 }
 
 .table th, .table td {
-    border: 1px solid #ddd;
+    border: 1px solid #a8a4a4;
     padding: 8px;
-    border-radius: 10px; /* Make all corners rounded */
-    color: #ffffff;
+    border-radius: 10px; 
+    color: #000000;
 }
 
 .table th {
@@ -59,17 +59,17 @@ img {
 }
 
 .table td {
-    text-align: right; /* Align content to the right */
+    text-align: right; 
 }
 
 .left-align {
-    text-align: left !important; /* Specific class for left alignment */
+    text-align: left !important; 
 }
 
 .footer {
     text-align: center;
     font-size: 12px;
-    color: #ffffff;
+    color: #696868;
     margin-top: 20px;
 }
 
