@@ -1,3 +1,4 @@
+/* VerPedido.css */
 body {
     font-family: 'Helvetica Neue', sans-serif;
     margin: 0;
@@ -38,8 +39,8 @@ body {
 .table {
     border-radius: 15px;
     overflow: hidden; /* Ensures rounded corners are visible */
-    background-color: #eed9a4; /* Black background for the table */
-    color: black; /* White text color */
+    background-color: #eed9a4; /* Light background for the table */
+    color: black; 
     margin: 0 auto; /* Center the table */
 }
 
@@ -76,7 +77,6 @@ body {
     z-index: 1000; 
 }
 
-
 @media (max-width: 767px) {
     .titulos {
        margin-top: 50px;
@@ -98,7 +98,7 @@ body {
     .table tr {
         display: block;
         margin-bottom: 1rem;
-        background-color: rgba(80, 77, 69, 0.9); /* Light blue background for mobile cards */
+        background-color: rgba(80, 77, 69, 0.9); /* Dark background for mobile cards */
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         padding: 10px;
