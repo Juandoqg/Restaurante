@@ -293,7 +293,7 @@ def verFacturaID(request, idMesa):
         'total': total,
         'total_quantity': total_quantity  # Pass the total quantity to the template
     })
-
+@login_required
 def verFactura(request):
     facturas = Factura.objects.all()
     processed_facturas = []
@@ -314,14 +314,37 @@ def verFactura(request):
         })
 
     return render(request, 'verFactura.html', {'processed_facturas': processed_facturas})
-
+@login_required
 def borrarPedido (request, idMesa):
     Pedido.objects.filter(mesa=idMesa).delete()
     return redirect('verMesas')  
+
+@login_required
+def crearMesas(request):
+    if request.method == 'GET':
+        return render(request, 'crearMesas.html')
+    elif request.method == 'POST':
+        try:
+            num_tables = int(request.POST['num_tables'])
+            for i in range(num_tables):
+             Mesa.objects.create(numero=i + 1)
+
+
+            # Guardar la imagen en la carpeta restaurante/myapp/static/img
+            if 'imgProducto' in request.FILES:
+                imagen = request.FILES['imgProducto']
+                ruta_imagen = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'img', imagen.name)
+                with open(ruta_imagen, 'wb') as f:
+                    for chunk in imagen.chunks():
+                        f.write(chunk)
+                producto.imgProducto = os.path.join('img/', imagen.name)
+            return render(request, 'crearMesas.html', {'success': True})
+        except Exception as e:
+            return render(request, 'crearMesas.html', {'success': False, 'error': str(e)})
    
 @login_required
 def signout(request):
     logout(request)
     return redirect("/")    
 
-  
+    
