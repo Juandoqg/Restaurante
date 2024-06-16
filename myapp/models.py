@@ -17,7 +17,7 @@ class Producto(models.Model):
 
 class Mesa (models.Model):
     idMesa = models.AutoField(primary_key=True)
-    numero = models.IntegerField()
+    numero = models.IntegerField(null=True, blank=True)
 
 class Pedido(models.Model):
     idPedido = models.AutoField(primary_key=True)

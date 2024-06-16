@@ -291,7 +291,7 @@ def verFacturaID(request, idMesa):
         'hora': hora,
         'idMesa': idMesa,
         'total': total,
-        'total_quantity': total_quantity  # Pass the total quantity to the template
+        'total_quantity': total_quantity  
     })
 @login_required
 def verFactura(request):
@@ -327,7 +327,9 @@ def crearMesas(request):
         try:
             num_tables = int(request.POST['num_tables'])
             for i in range(num_tables):
-             Mesa.objects.create(numero=i + 1)
+             mesa = Mesa.objects.create()
+             mesa.numero = mesa.idMesa  # Asignar el campo 'numero' igual al valor de 'id'
+             mesa.save()
 
 
             # Guardar la imagen en la carpeta restaurante/myapp/static/img
