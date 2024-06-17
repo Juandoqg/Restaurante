@@ -10,18 +10,18 @@ body {
 }
 
 a {
-    color: #2c2c2c; /* Color oscuro para el texto del enlace */
+    color: #ffffff; /* Color oscuro para el texto del enlace */
     text-decoration: none;
     font-size: 16px;
 }
 
 a:hover {
-    color: #1b0bf300; 
+    color: #ffffff00; 
 
 }
 
 .label-text-color {
-  color: #212529;
+  color: #ffffffe9;
 }
 /* Estilos personalizados */
 .table td {
@@ -38,3 +38,8 @@ a:hover {
   text-align: center !important;
   vertical-align: middle !important;
 }
+
+.texto{
+  color:white;
+}
+
