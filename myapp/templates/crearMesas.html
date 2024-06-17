@@ -62,19 +62,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function validateForm() {
-            const numTables = document.getElementById('num_tables').value;
-            if (numTables < 1 || numTables > 5) {
-                Swal.fire({
-                    title: 'Número de mesas inválido',
-                    text: 'El número de mesas debe ser entre 1 y 5.',
-                    icon: 'error'
-                });
-                return false;
-            }
-            return true;
-        }
-
+   
         function previewImage(event) {
             const imagePreview = document.getElementById('image_preview');
             const file = event.target.files[0];
